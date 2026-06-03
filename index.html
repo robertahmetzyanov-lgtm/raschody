@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Расходы">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="Запиши трату за 3 секунды — узнай, куда ушли деньги">
+  <title>Расходы</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header-top">
+        <h1 class="app-title">Расходы</h1>
+        <div class="header-actions">
+          <button type="button" class="icon-btn" id="btn-install" aria-label="Установить" title="Установить">📲</button>
+          <button type="button" class="icon-btn" id="btn-settings" aria-label="Настройки">⚙</button>
+        </div>
+      </div>
+      <div class="install-banner" id="install-banner" hidden>
+        <div class="install-banner-body">
+          <strong>Установите на главный экран</strong>
+          <span id="install-banner-hint">Быстрый доступ без браузера</span>
+        </div>
+        <button type="button" class="install-banner-btn" id="btn-install-banner">Как установить</button>
+        <button type="button" class="install-banner-close" id="btn-install-dismiss" aria-label="Скрыть">×</button>
+      </div>
+      <div class="summary">
+        <div class="summary-main">
+          <span class="summary-label" id="period-label">Сегодня</span>
+          <span class="summary-amount" id="period-total">0 ₽</span>
+        </div>
+        <div class="summary-sub" id="summary-sub"></div>
+      </div>
+      <div class="debts-panel" id="debts-panel" hidden>
+        <div class="debts-panel-head">
+          <span class="debts-panel-title">🏦 Долги</span>
+          <span class="debts-panel-total" id="debts-total"></span>
+        </div>
+        <div class="debts-panel-sub" id="debts-sub"></div>
+      </div>
+      <div class="savings-panel" id="savings-panel" hidden>
+        <div class="savings-panel-head">
+          <span class="savings-panel-title">💸 Можно сэкономить</span>
+          <span class="savings-panel-total" id="savings-total"></span>
+        </div>
+        <div class="savings-panel-sub" id="savings-sub"></div>
+        <div class="savings-panel-rows" id="savings-rows"></div>
+      </div>
+      <nav class="period-tabs" role="tablist">
+        <button type="button" class="period-tab active" data-period="today" role="tab">Сегодня</button>
+        <button type="button" class="period-tab" data-period="week" role="tab">Неделя</button>
+        <button type="button" class="period-tab" data-period="month" role="tab">Месяц</button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <div class="category-breakdown" id="category-breakdown"></div>
+      <div class="expense-list" id="expense-list"></div>
+      <p class="empty-state" id="empty-state">Пока пусто. Напишите «кофе 250» ниже.</p>
+    </main>
+
+    <footer class="input-bar">
+      <div class="limit-hint" id="limit-hint"></div>
+      <form id="expense-form" class="input-form">
+        <input
+          type="text"
+          id="expense-input"
+          class="expense-input"
+          placeholder="кофе 250"
+          autocomplete="off"
+          enterkeyhint="done"
+        >
+        <button type="submit" class="submit-btn" id="submit-btn">+</button>
+      </form>
+    </footer>
+  </div>
+
+  <!-- Редактирование -->
+  <dialog id="edit-dialog" class="dialog">
+    <form method="dialog" id="edit-form" class="dialog-form">
+      <h2>Изменить</h2>
+      <label>
+        Описание
+        <input type="text" id="edit-desc" required>
+      </label>
+      <label>
+        Сумма, ₽
+        <input type="number" id="edit-amount" min="1" step="1" required>
+      </label>
+      <label>
+        Категория
+        <select id="edit-category"></select>
+      </label>
+      <div class="dialog-actions">
+        <button type="button" class="btn-danger" id="btn-delete">Удалить</button>
+        <button type="submit" class="btn-primary">Сохранить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Настройки -->
+  <dialog id="settings-dialog" class="dialog">
+    <form method="dialog" class="dialog-form">
+      <h2>Настройки</h2>
+      <label class="toggle-row">
+        <span>Тёмная тема</span>
+        <input type="checkbox" id="dark-theme">
+      </label>
+      <label class="toggle-row pro-row">
+        <span>Pro (без лимита)</span>
+        <input type="checkbox" id="pro-mode">
+      </label>
+      <label id="budget-label">
+        Бюджет на месяц, ₽
+        <input type="number" id="monthly-budget" min="0" step="1000" placeholder="40000">
+      </label>
+      <p class="hint" id="budget-hint">Pro: предупреждение при превышении бюджета</p>
+
+      <div class="settings-section">
+        <h3 class="settings-section-title">Мои категории</h3>
+        <p class="hint">Свои категории появятся в списке при редактировании траты.</p>
+        <div class="custom-cat-form">
+          <label>
+            Название
+            <input type="text" id="new-cat-name" placeholder="Дети" maxlength="30">
+          </label>
+          <label class="custom-cat-icon-label">
+            Иконка
+            <input type="text" id="new-cat-icon" placeholder="👶" maxlength="4" value="📌">
+          </label>
+          <label>
+            Слова для автоопределения
+            <input type="text" id="new-cat-keywords" placeholder="памперсы, детский сад">
+          </label>
+          <label class="toggle-row">
+            <span>Привычка (можно сэкономить)</span>
+            <input type="checkbox" id="new-cat-savings">
+          </label>
+          <label class="toggle-row">
+            <span>Долг</span>
+            <input type="checkbox" id="new-cat-debt">
+          </label>
+          <button type="button" class="btn-secondary btn-block" id="btn-add-category">+ Добавить категорию</button>
+        </div>
+        <ul class="custom-cat-list" id="custom-cat-list"></ul>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn-secondary" id="btn-export">Экспорт CSV</button>
+        <button type="submit" class="btn-primary">Готово</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Установка на телефон -->
+  <dialog id="install-dialog" class="dialog">
+    <div class="dialog-form install-dialog">
+      <h2>Установить «Расходы»</h2>
+      <div class="install-steps" id="install-steps"></div>
+      <button type="button" class="btn-primary btn-block" id="btn-install-native" hidden>Установить приложение</button>
+      <button type="button" class="btn-secondary btn-block" id="btn-install-close">Понятно</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
