@@ -1,5 +1,13 @@
 import { parseExpenseInput } from './parser.js';
-import { getAllCategories, groupByCategory, splitExpenseGroups, detectCategory, getCategory } from './categories.js';
+import {
+  getAllCategories,
+  groupByCategory,
+  splitExpenseGroups,
+  detectCategory,
+  getCategory,
+  FREE_SAVINGS_CATEGORY_ID,
+  SAVINGS_CATEGORY_IDS,
+} from './categories.js';
 import {
   loadCustomCategories,
   addCustomCategory,
@@ -16,9 +24,7 @@ import {
   getExpensesForPeriod,
   sumAmount,
   canAddToday,
-  countTodayExpenses,
   exportCsv,
-  FREE_DAILY_LIMIT,
 } from './store.js';
 import {
   formatMoney,
@@ -35,7 +41,6 @@ const els = {
   periodLabel: document.getElementById('period-label'),
   periodTotal: document.getElementById('period-total'),
   summarySub: document.getElementById('summary-sub'),
-  limitWarning: document.getElementById('limit-warning'),
   expenseList: document.getElementById('expense-list'),
   categoryBreakdown: document.getElementById('category-breakdown'),
   savingsPanel: document.getElementById('savings-panel'),
@@ -47,7 +52,6 @@ const els = {
   debtsSub: document.getElementById('debts-sub'),
   expenseForm: document.getElementById('expense-form'),
   expenseInput: document.getElementById('expense-input'),
-  limitHint: document.getElementById('limit-hint'),
   editDialog: document.getElementById('edit-dialog'),
   editForm: document.getElementById('edit-form'),
   editDesc: document.getElementById('edit-desc'),
@@ -68,6 +72,9 @@ const els = {
   newCatSavings: document.getElementById('new-cat-savings'),
   newCatDebt: document.getElementById('new-cat-debt'),
   btnAddCategory: document.getElementById('btn-add-category'),
+  customCatSection: document.getElementById('custom-cat-section'),
+  customCatForm: document.getElementById('custom-cat-form'),
+  customCatHint: document.getElementById('custom-cat-hint'),
   customCatList: document.getElementById('custom-cat-list'),
 };
 
@@ -76,6 +83,7 @@ init();
 function init() {
   populateCategorySelect();
   applyTheme();
+  updateProFieldsVisibility();
   bindEvents();
   render();
   registerServiceWorker();
@@ -100,7 +108,7 @@ function bindEvents() {
     els.darkTheme.checked = settings.darkTheme;
     els.proMode.checked = settings.isPro;
     els.monthlyBudget.value = settings.monthlyBudget ?? '';
-    updateBudgetFieldsVisibility();
+    updateProFieldsVisibility();
     renderCustomCategoryList();
     els.settingsDialog.showModal();
   });
@@ -114,7 +122,7 @@ function bindEvents() {
   els.proMode.addEventListener('change', () => {
     settings.isPro = els.proMode.checked;
     saveSettings(settings);
-    updateBudgetFieldsVisibility();
+    updateProFieldsVisibility();
     render();
   });
 
@@ -126,10 +134,7 @@ function bindEvents() {
   });
 
   els.btnExport.addEventListener('click', () => {
-    if (!settings.isPro) {
-      alert('Экспорт CSV — функция Pro. Включите Pro в настройках для теста.');
-      return;
-    }
+    if (!settings.isPro) return;
     exportCsv();
   });
 
@@ -172,18 +177,12 @@ function handleAdd() {
   }
 
   if (!canAddToday(settings)) {
-    const msg = `Лимит ${FREE_DAILY_LIMIT} записей в день исчерпан. Pro — без ограничений.`;
-    els.limitHint.textContent = msg;
-    els.limitHint.classList.add('visible', 'error');
-    els.limitWarning.textContent = msg;
-    els.limitWarning.hidden = false;
-    els.limitWarning.classList.add('limit-warning--error');
+    shakeInput();
     return;
   }
 
   addExpense(parsed.description, parsed.amount);
   els.expenseInput.value = '';
-  els.limitHint.classList.remove('error');
   render();
   els.expenseInput.focus();
 }
@@ -197,15 +196,45 @@ function render() {
   const expenses = getExpensesForPeriod(currentPeriod);
   const total = sumAmount(expenses);
   const groups = groupByCategory(expenses);
-  const { savings, debts, regular, savingsTotal, debtsTotal } = splitExpenseGroups(groups);
+  const split = splitExpenseGroups(groups);
+  const { savings, regular, savingsTotal } = applyFreeTierLimits(split.savings, split.regular);
 
-  renderSummary(total, expenses.length, savingsTotal, debtsTotal);
-  renderDebtsPanel(debts, debtsTotal, total);
+  renderSummary(total, expenses.length, savingsTotal, split.debtsTotal);
+  renderDebtsPanel(split.debts, split.debtsTotal, total);
   renderSavingsPanel(savings, savingsTotal, total);
-  renderCategoryBreakdown(regular, total - savingsTotal - debtsTotal);
+  renderCategoryBreakdown(regular);
   renderList(expenses);
-  renderLimitHint();
   checkBudgetWarning();
+}
+
+function applyFreeTierLimits(savings, regular) {
+  if (settings.isPro) {
+    return {
+      savings,
+      regular,
+      savingsTotal: savings.reduce((s, g) => s + g.total, 0),
+    };
+  }
+
+  const freeSavings = [];
+  const mergedRegular = [...regular];
+
+  for (const g of savings) {
+    if (g.category.id === FREE_SAVINGS_CATEGORY_ID) {
+      freeSavings.push(g);
+    } else {
+      mergedRegular.push(g);
+    }
+  }
+
+  mergedRegular.sort((a, b) => b.total - a.total);
+  return {
+    savings: freeSavings,
+    regular: mergedRegular.filter(
+      (g) => !SAVINGS_CATEGORY_IDS.includes(g.category.id),
+    ),
+    savingsTotal: freeSavings.reduce((s, g) => s + g.total, 0),
+  };
 }
 
 function renderSummary(total, count, savingsTotal, debtsTotal) {
@@ -272,12 +301,13 @@ function renderSavingsPanel(savingsGroups, savingsTotal, periodTotal) {
   }
 }
 
-function renderCategoryBreakdown(groups, regularTotal) {
+function renderCategoryBreakdown(groups) {
   els.categoryBreakdown.innerHTML = '';
-  if (!groups.length || regularTotal === 0) return;
+  const shownTotal = groups.reduce((s, g) => s + g.total, 0);
+  if (!groups.length || shownTotal === 0) return;
 
   for (const { category, total: catTotal } of groups) {
-    const pct = Math.round((catTotal / regularTotal) * 100);
+    const pct = Math.round((catTotal / shownTotal) * 100);
     const chip = document.createElement('div');
     chip.className = 'cat-chip';
     chip.innerHTML = `
@@ -372,6 +402,8 @@ function renderCustomCategoryList() {
 }
 
 function handleAddCategory() {
+  if (!settings.isPro) return;
+
   const name = els.newCatName.value.trim();
   if (!name) {
     els.newCatName.focus();
@@ -420,49 +452,6 @@ function openEdit(expense) {
   els.editDialog.showModal();
 }
 
-function renderLimitHint() {
-  if (settings.isPro) {
-    els.limitHint.classList.remove('visible', 'error', 'warn');
-    els.limitWarning.hidden = true;
-    return;
-  }
-
-  const used = countTodayExpenses();
-  const left = FREE_DAILY_LIMIT - used;
-  const limitText = `${FREE_DAILY_LIMIT} ${plural(FREE_DAILY_LIMIT, 'запись', 'записи', 'записей')} в день`;
-
-  if (left <= 0) {
-    const msg = `Лимит исчерпан: ${used} из ${FREE_DAILY_LIMIT} сегодня. Pro — без ограничений.`;
-    els.limitWarning.textContent = msg;
-    els.limitWarning.hidden = false;
-    els.limitWarning.classList.add('limit-warning--error');
-    els.limitWarning.classList.remove('limit-warning--warn');
-    els.limitHint.textContent = msg;
-    els.limitHint.classList.add('visible', 'error');
-    els.limitHint.classList.remove('warn');
-    return;
-  }
-
-  if (used >= 2) {
-    const msg =
-      left === 1
-        ? `⚠ Сегодня ${used} из ${FREE_DAILY_LIMIT}. Осталась 1 запись — лимит ${limitText}.`
-        : `⚠ Сегодня ${used} из ${FREE_DAILY_LIMIT}. Осталось ${left} — бесплатный лимит ${limitText}.`;
-    els.limitWarning.textContent = msg;
-    els.limitWarning.hidden = false;
-    els.limitWarning.classList.add('limit-warning--warn');
-    els.limitWarning.classList.remove('limit-warning--error');
-    els.limitHint.textContent = msg;
-    els.limitHint.classList.add('visible', 'warn');
-    els.limitHint.classList.remove('error');
-    return;
-  }
-
-  els.limitWarning.hidden = true;
-  els.limitWarning.classList.remove('limit-warning--warn', 'limit-warning--error');
-  els.limitHint.classList.remove('visible', 'error', 'warn');
-}
-
 const BUDGET_WARN_RATIO = 0.85;
 
 function checkBudgetWarning() {
@@ -498,11 +487,12 @@ function prependSummarySub(line) {
   els.summarySub.textContent = existing ? `${line} · ${existing}` : line;
 }
 
-function updateBudgetFieldsVisibility() {
+function updateProFieldsVisibility() {
   const pro = settings.isPro;
-  els.budgetLabel.style.display = pro ? '' : 'none';
-  els.budgetHint.style.display = pro ? '' : 'none';
-  els.btnExport.disabled = !pro;
+  els.budgetLabel.hidden = !pro;
+  els.budgetHint.hidden = !pro;
+  els.btnExport.hidden = !pro;
+  els.customCatSection.hidden = !pro;
 }
 
 function applyTheme() {

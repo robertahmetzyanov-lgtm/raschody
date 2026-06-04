@@ -31,7 +31,6 @@
         </div>
         <div class="summary-sub" id="summary-sub"></div>
       </div>
-      <div class="limit-warning" id="limit-warning" hidden></div>
       <div class="debts-panel" id="debts-panel" hidden>
         <div class="debts-panel-head">
           <span class="debts-panel-title">🏦 Долги</span>
@@ -60,7 +59,6 @@
     </main>
 
     <footer class="input-bar">
-      <div class="limit-hint" id="limit-hint"></div>
       <form id="expense-form" class="input-form">
         <input
           type="text"
@@ -116,10 +114,10 @@
       </label>
       <p class="hint" id="budget-hint">Pro: предупреждение при превышении бюджета</p>
 
-      <div class="settings-section">
+      <div class="settings-section" id="custom-cat-section">
         <h3 class="settings-section-title">Мои категории</h3>
-        <p class="hint">Свои категории появятся в списке при редактировании траты.</p>
-        <div class="custom-cat-form">
+        <p class="hint" id="custom-cat-hint">Свои категории появятся в списке при редактировании траты.</p>
+        <div class="custom-cat-form" id="custom-cat-form">
           <label>
             Название
             <input type="text" id="new-cat-name" placeholder="Дети" maxlength="30">

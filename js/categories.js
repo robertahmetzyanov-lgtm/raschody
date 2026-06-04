@@ -2,7 +2,9 @@
 import { loadCustomCategories } from './customCategories.js';
 import { getCategoryRule } from './categoryRules.js';
 
-/** «Привычки» — отдельный блок «можно сэкономить» */
+/** «Привычки» — отдельный блок «можно сэкономить» (Pro: все, Free: только кофе) */
+export const FREE_SAVINGS_CATEGORY_ID = 'coffee';
+
 export const SAVINGS_CATEGORY_IDS = [
   'cigarettes',
   'coffee',
