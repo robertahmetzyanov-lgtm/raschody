@@ -1,5 +1,6 @@
 /** Основные категории и автоопределение по описанию */
 import { loadCustomCategories } from './customCategories.js';
+import { getCategoryRule } from './categoryRules.js';
 
 /** «Привычки» — отдельный блок «можно сэкономить» */
 export const SAVINGS_CATEGORY_IDS = [
@@ -85,7 +86,7 @@ export const BUILTIN_CATEGORIES = [
     icon: '🏠',
     savings: false,
     keywords: [
-      'аренда', 'жкх', 'коммунал', 'квартира', 'квартплата', 'электричество',
+      'аренда', 'жкх', 'коммунал', 'квартира', 'квартплата', 'кварплат', 'кварплата', 'электричество',
       'газ', 'вода', 'отопление', 'домофон', 'управляющая', 'ремонт квартир',
       'обои', 'плитка', 'сантехник',
       'мебель', 'диван', 'кровать', 'матрас', 'шкаф', 'стол', 'стул', 'комод',
@@ -265,6 +266,12 @@ export function resolveCategoryId(storedId, description) {
 export function detectCategory(description) {
   const text = (description || '').toLowerCase().trim();
   if (!text || text === '—') return 'other';
+
+  const remembered = getCategoryRule(description);
+  if (remembered) {
+    const map = getCategoryMap();
+    if (map[remembered]) return remembered;
+  }
 
   if (isHousingItem(text)) return 'housing';
   if (isClothingItem(text)) return 'clothing';

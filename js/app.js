@@ -5,6 +5,7 @@ import {
   addCustomCategory,
   deleteCustomCategory,
 } from './customCategories.js';
+import { deleteCategoryRulesForCategory } from './categoryRules.js';
 import {
   addExpense,
   updateExpense,
@@ -34,6 +35,7 @@ const els = {
   periodLabel: document.getElementById('period-label'),
   periodTotal: document.getElementById('period-total'),
   summarySub: document.getElementById('summary-sub'),
+  limitWarning: document.getElementById('limit-warning'),
   expenseList: document.getElementById('expense-list'),
   categoryBreakdown: document.getElementById('category-breakdown'),
   savingsPanel: document.getElementById('savings-panel'),
@@ -43,7 +45,6 @@ const els = {
   debtsPanel: document.getElementById('debts-panel'),
   debtsTotal: document.getElementById('debts-total'),
   debtsSub: document.getElementById('debts-sub'),
-  emptyState: document.getElementById('empty-state'),
   expenseForm: document.getElementById('expense-form'),
   expenseInput: document.getElementById('expense-input'),
   limitHint: document.getElementById('limit-hint'),
@@ -68,18 +69,7 @@ const els = {
   newCatDebt: document.getElementById('new-cat-debt'),
   btnAddCategory: document.getElementById('btn-add-category'),
   customCatList: document.getElementById('custom-cat-list'),
-  btnInstall: document.getElementById('btn-install'),
-  installBanner: document.getElementById('install-banner'),
-  installBannerHint: document.getElementById('install-banner-hint'),
-  btnInstallBanner: document.getElementById('btn-install-banner'),
-  btnInstallDismiss: document.getElementById('btn-install-dismiss'),
-  installDialog: document.getElementById('install-dialog'),
-  installSteps: document.getElementById('install-steps'),
-  btnInstallNative: document.getElementById('btn-install-native'),
-  btnInstallClose: document.getElementById('btn-install-close'),
 };
-
-let deferredInstallPrompt = null;
 
 init();
 
@@ -89,7 +79,6 @@ function init() {
   bindEvents();
   render();
   registerServiceWorker();
-  initInstallUi();
 }
 
 function bindEvents() {
@@ -173,24 +162,6 @@ function bindEvents() {
   });
 
   els.btnAddCategory.addEventListener('click', handleAddCategory);
-
-  els.btnInstall.addEventListener('click', openInstallDialog);
-  els.btnInstallBanner.addEventListener('click', openInstallDialog);
-  els.btnInstallDismiss.addEventListener('click', dismissInstallBanner);
-  els.btnInstallClose.addEventListener('click', () => els.installDialog.close());
-  els.btnInstallNative.addEventListener('click', triggerNativeInstall);
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredInstallPrompt = e;
-    els.btnInstallNative.hidden = false;
-    updateInstallBanner();
-  });
-
-  window.addEventListener('appinstalled', () => {
-    deferredInstallPrompt = null;
-    hideInstallUi();
-  });
 }
 
 function handleAdd() {
@@ -201,8 +172,12 @@ function handleAdd() {
   }
 
   if (!canAddToday(settings)) {
-    els.limitHint.textContent = `Лимит: ${FREE_DAILY_LIMIT} записей в день. Включите Pro в настройках.`;
+    const msg = `Лимит ${FREE_DAILY_LIMIT} записей в день исчерпан. Pro — без ограничений.`;
+    els.limitHint.textContent = msg;
     els.limitHint.classList.add('visible', 'error');
+    els.limitWarning.textContent = msg;
+    els.limitWarning.hidden = false;
+    els.limitWarning.classList.add('limit-warning--error');
     return;
   }
 
@@ -317,13 +292,8 @@ function renderCategoryBreakdown(groups, regularTotal) {
 
 function renderList(expenses) {
   els.expenseList.innerHTML = '';
+  if (!expenses.length) return;
 
-  if (!expenses.length) {
-    els.emptyState.style.display = 'block';
-    return;
-  }
-
-  els.emptyState.style.display = 'none';
   const items = [...expenses].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
   );
@@ -435,6 +405,7 @@ function handleAddCategory() {
 function handleDeleteCategory(id, name) {
   if (!confirm(`Удалить категорию «${name}»? Траты перейдут в «Прочее».`)) return;
   deleteCustomCategory(id);
+  deleteCategoryRulesForCategory(id);
   reassignCategory(id, 'other');
   populateCategorySelect();
   renderCustomCategoryList();
@@ -451,33 +422,80 @@ function openEdit(expense) {
 
 function renderLimitHint() {
   if (settings.isPro) {
-    els.limitHint.classList.remove('visible');
+    els.limitHint.classList.remove('visible', 'error', 'warn');
+    els.limitWarning.hidden = true;
     return;
   }
+
   const used = countTodayExpenses();
   const left = FREE_DAILY_LIMIT - used;
-  if (left <= 2 && left > 0) {
-    els.limitHint.textContent = `Осталось ${left} ${plural(left, 'запись', 'записи', 'записей')} сегодня`;
-    els.limitHint.classList.add('visible');
-    els.limitHint.classList.remove('error');
-  } else if (left <= 0) {
-    els.limitHint.textContent = `Лимит ${FREE_DAILY_LIMIT}/день. Pro — без лимита.`;
+  const limitText = `${FREE_DAILY_LIMIT} ${plural(FREE_DAILY_LIMIT, 'запись', 'записи', 'записей')} в день`;
+
+  if (left <= 0) {
+    const msg = `Лимит исчерпан: ${used} из ${FREE_DAILY_LIMIT} сегодня. Pro — без ограничений.`;
+    els.limitWarning.textContent = msg;
+    els.limitWarning.hidden = false;
+    els.limitWarning.classList.add('limit-warning--error');
+    els.limitWarning.classList.remove('limit-warning--warn');
+    els.limitHint.textContent = msg;
     els.limitHint.classList.add('visible', 'error');
-  } else {
-    els.limitHint.classList.remove('visible', 'error');
+    els.limitHint.classList.remove('warn');
+    return;
+  }
+
+  if (used >= 2) {
+    const msg =
+      left === 1
+        ? `⚠ Сегодня ${used} из ${FREE_DAILY_LIMIT}. Осталась 1 запись — лимит ${limitText}.`
+        : `⚠ Сегодня ${used} из ${FREE_DAILY_LIMIT}. Осталось ${left} — бесплатный лимит ${limitText}.`;
+    els.limitWarning.textContent = msg;
+    els.limitWarning.hidden = false;
+    els.limitWarning.classList.add('limit-warning--warn');
+    els.limitWarning.classList.remove('limit-warning--error');
+    els.limitHint.textContent = msg;
+    els.limitHint.classList.add('visible', 'warn');
+    els.limitHint.classList.remove('error');
+    return;
+  }
+
+  els.limitWarning.hidden = true;
+  els.limitWarning.classList.remove('limit-warning--warn', 'limit-warning--error');
+  els.limitHint.classList.remove('visible', 'error', 'warn');
+}
+
+const BUDGET_WARN_RATIO = 0.85;
+
+function checkBudgetWarning() {
+  els.periodTotal.classList.remove('budget-ok', 'budget-warn', 'budget-over', 'over-budget');
+  els.summarySub.classList.remove('summary-sub--budget-warn', 'summary-sub--budget-over');
+
+  if (!settings.isPro || !settings.monthlyBudget) return;
+
+  const budget = settings.monthlyBudget;
+  const monthTotal = sumAmount(getExpensesForPeriod('month'));
+  const ratio = monthTotal / budget;
+  const left = budget - monthTotal;
+
+  let status = 'ok';
+  if (monthTotal > budget) status = 'over';
+  else if (ratio >= BUDGET_WARN_RATIO) status = 'warn';
+
+  els.periodTotal.classList.add(`budget-${status}`);
+
+  if (status === 'over') {
+    const line = `⚠ Превышен бюджет на ${formatMoney(monthTotal - budget)}`;
+    prependSummarySub(line);
+    els.summarySub.classList.add('summary-sub--budget-over');
+  } else if (status === 'warn') {
+    const line = `⚠ Близко к лимиту: осталось ${formatMoney(left)} из ${formatMoney(budget)}`;
+    prependSummarySub(line);
+    els.summarySub.classList.add('summary-sub--budget-warn');
   }
 }
 
-function checkBudgetWarning() {
-  if (!settings.isPro || !settings.monthlyBudget) return;
-  const monthTotal = sumAmount(getExpensesForPeriod('month'));
-  if (monthTotal > settings.monthlyBudget) {
-    els.periodTotal.classList.add('over-budget');
-    const over = monthTotal - settings.monthlyBudget;
-    els.summarySub.textContent = `⚠ Превышен бюджет на ${formatMoney(over)}`;
-  } else {
-    els.periodTotal.classList.remove('over-budget');
-  }
+function prependSummarySub(line) {
+  const existing = els.summarySub.textContent.trim();
+  els.summarySub.textContent = existing ? `${line} · ${existing}` : line;
 }
 
 function updateBudgetFieldsVisibility() {
@@ -514,143 +532,4 @@ async function registerServiceWorker() {
       /* offline optional */
     }
   }
-}
-
-const INSTALL_DISMISS_KEY = 'raschody_install_dismissed';
-
-function isStandaloneApp() {
-  return (
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone === true
-  );
-}
-
-function detectMobilePlatform() {
-  const ua = navigator.userAgent;
-  if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-    return 'ios';
-  }
-  if (/Android/i.test(ua)) return 'android';
-  return 'other';
-}
-
-function isInAppBrowser() {
-  return /Telegram|WhatsApp|Instagram|FBAN|FBAV|Line\//i.test(navigator.userAgent);
-}
-
-function initInstallUi() {
-  if (isStandaloneApp()) {
-    hideInstallUi();
-    return;
-  }
-
-  updateInstallBanner();
-  els.btnInstall.hidden = false;
-}
-
-function updateInstallBanner() {
-  if (isStandaloneApp() || localStorage.getItem(INSTALL_DISMISS_KEY)) {
-    els.installBanner.hidden = true;
-    return;
-  }
-
-  const platform = detectMobilePlatform();
-  if (platform === 'ios') {
-    els.installBannerHint.textContent = 'Через Safari → «На экран Домой»';
-  } else if (platform === 'android' && deferredInstallPrompt) {
-    els.installBannerHint.textContent = 'Можно установить одной кнопкой';
-  } else if (platform === 'android') {
-    els.installBannerHint.textContent = 'Меню браузера → «На главный экран»';
-  } else {
-    els.installBannerHint.textContent = 'Откройте на телефоне';
-  }
-
-  els.installBanner.hidden = false;
-}
-
-function dismissInstallBanner() {
-  localStorage.setItem(INSTALL_DISMISS_KEY, '1');
-  els.installBanner.hidden = true;
-}
-
-function hideInstallUi() {
-  els.installBanner.hidden = true;
-  els.btnInstall.hidden = true;
-}
-
-function openInstallDialog() {
-  renderInstallSteps();
-  els.btnInstallNative.hidden = !deferredInstallPrompt;
-  els.installDialog.showModal();
-}
-
-function renderInstallSteps() {
-  const platform = detectMobilePlatform();
-  const inApp = isInAppBrowser();
-  const secure = window.isSecureContext;
-  let steps = [];
-  let note = '';
-
-  if (inApp) {
-    steps = [
-      'Сначала откройте сайт во <strong>внешнем браузере</strong> (Chrome или Safari), а не внутри мессенджера.',
-      'Нажмите «⋯» или «Открыть в браузере» в углу экрана.',
-      'Затем повторите установку по инструкции ниже.',
-    ];
-  }
-
-  if (platform === 'ios') {
-    steps = steps.concat([
-      'Откройте этот сайт в <strong>Safari</strong> (не Chrome и не Telegram).',
-      'Нажмите кнопку <strong>«Поделиться»</strong> внизу экрана (квадрат со стрелкой вверх).',
-      'Прокрутите список и выберите <strong>«На экран Домой»</strong>.',
-      'Нажмите <strong>«Добавить»</strong> — появится иконка «Расходы».',
-    ]);
-    note = 'На iPhone нет пункта «Установить приложение» в меню — только «На экран Домой» в Safari.';
-  } else if (platform === 'android') {
-    if (deferredInstallPrompt) {
-      steps = steps.concat([
-        'Нажмите кнопку <strong>«Установить приложение»</strong> ниже.',
-        'Подтвердите установку — иконка появится на главном экране.',
-      ]);
-    } else {
-      steps = steps.concat([
-        'Откройте меню браузера <strong>⋮</strong> (три точки справа вверху).',
-        'Выберите <strong>«Установить приложение»</strong> или <strong>«Добавить на главный экран»</strong>.',
-        'Подтвердите — приложение откроется без адресной строки.',
-      ]);
-      if (!secure) {
-        note = 'Сейчас сайт открыт по HTTP — Chrome может не показать «Установить». Запустите на ПК: python serve-mobile.py и откройте https://…:8443 на телефоне.';
-      }
-    }
-  } else {
-    steps = [
-      'Откройте сайт на телефоне в той же Wi‑Fi сети.',
-      'Android: Chrome → ⋮ → «Добавить на главный экран».',
-      'iPhone: Safari → Поделиться → «На экран Домой».',
-    ];
-  }
-
-  els.installSteps.innerHTML =
-    steps
-      .map(
-        (text, i) => `
-      <div class="install-step">
-        <span class="install-step-num">${i + 1}</span>
-        <div class="install-step-text">${text}</div>
-      </div>`,
-      )
-      .join('') + (note ? `<p class="install-note">${note}</p>` : '');
-}
-
-async function triggerNativeInstall() {
-  if (!deferredInstallPrompt) {
-    openInstallDialog();
-    return;
-  }
-  deferredInstallPrompt.prompt();
-  await deferredInstallPrompt.userChoice;
-  deferredInstallPrompt = null;
-  els.btnInstallNative.hidden = true;
-  els.installDialog.close();
 }

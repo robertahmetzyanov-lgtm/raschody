@@ -21,17 +21,8 @@
       <div class="header-top">
         <h1 class="app-title">Расходы</h1>
         <div class="header-actions">
-          <button type="button" class="icon-btn" id="btn-install" aria-label="Установить" title="Установить">📲</button>
           <button type="button" class="icon-btn" id="btn-settings" aria-label="Настройки">⚙</button>
         </div>
-      </div>
-      <div class="install-banner" id="install-banner" hidden>
-        <div class="install-banner-body">
-          <strong>Установите на главный экран</strong>
-          <span id="install-banner-hint">Быстрый доступ без браузера</span>
-        </div>
-        <button type="button" class="install-banner-btn" id="btn-install-banner">Как установить</button>
-        <button type="button" class="install-banner-close" id="btn-install-dismiss" aria-label="Скрыть">×</button>
       </div>
       <div class="summary">
         <div class="summary-main">
@@ -40,6 +31,7 @@
         </div>
         <div class="summary-sub" id="summary-sub"></div>
       </div>
+      <div class="limit-warning" id="limit-warning" hidden></div>
       <div class="debts-panel" id="debts-panel" hidden>
         <div class="debts-panel-head">
           <span class="debts-panel-title">🏦 Долги</span>
@@ -65,7 +57,6 @@
     <main class="main">
       <div class="category-breakdown" id="category-breakdown"></div>
       <div class="expense-list" id="expense-list"></div>
-      <p class="empty-state" id="empty-state">Пока пусто. Напишите «кофе 250» ниже.</p>
     </main>
 
     <footer class="input-bar">
@@ -159,16 +150,6 @@
         <button type="submit" class="btn-primary">Готово</button>
       </div>
     </form>
-  </dialog>
-
-  <!-- Установка на телефон -->
-  <dialog id="install-dialog" class="dialog">
-    <div class="dialog-form install-dialog">
-      <h2>Установить «Расходы»</h2>
-      <div class="install-steps" id="install-steps"></div>
-      <button type="button" class="btn-primary btn-block" id="btn-install-native" hidden>Установить приложение</button>
-      <button type="button" class="btn-secondary btn-block" id="btn-install-close">Понятно</button>
-    </div>
   </dialog>
 
   <script type="module" src="js/app.js"></script>

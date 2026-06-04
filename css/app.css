@@ -1,23 +1,48 @@
-:root {
-  --bg: #f5f5f7;
-  --surface: #ffffff;
-  --text: #1a1a2e;
-  --text-muted: #6b7280;
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
-  --danger: #ef4444;
-  --savings: #f59e0b;
-  --savings-bg: rgba(245, 158, 11, 0.12);
-  --savings-border: rgba(245, 158, 11, 0.35);
-  --debts: #64748b;
-  --debts-bg: rgba(100, 116, 139, 0.12);
-  --debts-border: rgba(100, 116, 139, 0.35);
-  --border: #e5e7eb;
-  --input-bg: #f9fafb;
-  --shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+:root,
+[data-theme="light"] {
+  --bg: #dce6df;
+  --surface: #eef4ef;
+  --text: #2a3530;
+  --text-muted: #5a6b60;
+  --accent: #5a9170;
+  --accent-hover: #487a5c;
+  --danger: #c45656;
+  --savings: #b8882e;
+  --savings-bg: rgba(184, 136, 46, 0.14);
+  --savings-border: rgba(184, 136, 46, 0.32);
+  --debts: #667a6e;
+  --debts-bg: rgba(102, 122, 110, 0.14);
+  --debts-border: rgba(102, 122, 110, 0.3);
+  --border: #b8c8bb;
+  --input-bg: #e4ece6;
+  --shadow: 0 -4px 24px rgba(42, 53, 48, 0.1);
+  --budget-ok: #4a8a62;
+  --budget-warn: #b8882e;
   --radius: 16px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-top: env(safe-area-inset-top, 0px);
+}
+
+[data-theme="light"] body {
+  background: linear-gradient(180deg, #cfdcd4 0%, #dce6df 42%, #e2ebe5 100%);
+}
+
+[data-theme="light"] .header {
+  background: #eef4ef;
+  box-shadow: 0 1px 0 rgba(90, 115, 98, 0.12);
+}
+
+[data-theme="light"] .input-bar {
+  background: #eef4ef;
+  border-top: 1px solid var(--border);
+}
+
+[data-theme="light"] .expense-item {
+  background: #f2f7f3;
+}
+
+[data-theme="light"] .cat-chip {
+  background: #e8f0ea;
 }
 
 [data-theme="dark"] {
@@ -36,6 +61,8 @@
   --border: #2d2d44;
   --input-bg: #252540;
   --shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+  --budget-ok: #6ee7a0;
+  --budget-warn: #fbbf24;
 }
 
 *, *::before, *::after {
@@ -219,7 +246,24 @@ html, body {
   letter-spacing: -0.02em;
 }
 
+.summary-amount.budget-ok {
+  color: var(--budget-ok);
+}
+
+.summary-amount.budget-warn {
+  color: var(--budget-warn);
+}
+
+.summary-amount.budget-over,
 .summary-amount.over-budget {
+  color: var(--danger);
+}
+
+.summary-sub--budget-warn {
+  color: var(--budget-warn);
+}
+
+.summary-sub--budget-over {
   color: var(--danger);
 }
 
@@ -544,6 +588,37 @@ html, body {
 
 .limit-hint.error {
   color: var(--danger);
+}
+
+.limit-hint.warn {
+  color: var(--savings);
+  font-weight: 500;
+}
+
+.limit-warning {
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.limit-warning--warn {
+  background: var(--savings-bg);
+  border: 1px solid var(--savings-border);
+  color: var(--savings);
+}
+
+.limit-warning--error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: var(--danger);
+  font-weight: 500;
+}
+
+[data-theme="light"] .limit-warning--error {
+  background: rgba(196, 86, 86, 0.12);
+  border-color: rgba(196, 86, 86, 0.35);
 }
 
 .input-form {

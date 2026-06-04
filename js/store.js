@@ -1,4 +1,5 @@
 import { detectCategory, getCategory, resolveCategoryId } from './categories.js';
+import { saveCategoryRule } from './categoryRules.js';
 
 const STORAGE_KEY = 'raschody_expenses_v1';
 const SETTINGS_KEY = 'raschody_settings_v1';
@@ -75,6 +76,9 @@ export function updateExpense(id, description, amount, categoryId) {
     amount,
     categoryId: categoryId || detectCategory(description),
   };
+  if (categoryId) {
+    saveCategoryRule(description, categoryId);
+  }
   saveExpenses(expenses);
   return expenses[idx];
 }
