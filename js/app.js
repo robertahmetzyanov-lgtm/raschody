@@ -109,7 +109,7 @@ function bindEvents() {
     els.proMode.checked = settings.isPro;
     els.monthlyBudget.value = settings.monthlyBudget ?? '';
     updateProFieldsVisibility();
-    renderCustomCategoryList();
+    if (settings.isPro) renderCustomCategoryList();
     els.settingsDialog.showModal();
   });
 

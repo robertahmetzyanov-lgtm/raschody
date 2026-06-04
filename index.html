@@ -108,13 +108,13 @@
         <span>Pro (без лимита)</span>
         <input type="checkbox" id="pro-mode">
       </label>
-      <label id="budget-label">
+      <label id="budget-label" hidden>
         Бюджет на месяц, ₽
         <input type="number" id="monthly-budget" min="0" step="1000" placeholder="40000">
       </label>
-      <p class="hint" id="budget-hint">Pro: предупреждение при превышении бюджета</p>
+      <p class="hint" id="budget-hint" hidden>Pro: предупреждение при превышении бюджета</p>
 
-      <div class="settings-section" id="custom-cat-section">
+      <div class="settings-section pro-only" id="custom-cat-section" hidden>
         <h3 class="settings-section-title">Мои категории</h3>
         <p class="hint" id="custom-cat-hint">Свои категории появятся в списке при редактировании траты.</p>
         <div class="custom-cat-form" id="custom-cat-form">
@@ -144,7 +144,7 @@
       </div>
 
       <div class="dialog-actions">
-        <button type="button" class="btn-secondary" id="btn-export">Экспорт CSV</button>
+        <button type="button" class="btn-secondary" id="btn-export" hidden>Экспорт CSV</button>
         <button type="submit" class="btn-primary">Готово</button>
       </div>
     </form>

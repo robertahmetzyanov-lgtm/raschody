@@ -784,6 +784,13 @@ html, body {
   gap: 10px;
 }
 
+.pro-only[hidden],
+#budget-label[hidden],
+#budget-hint[hidden],
+#btn-export[hidden] {
+  display: none !important;
+}
+
 .settings-section-title {
   margin: 0;
   font-size: 1rem;
