@@ -36,6 +36,7 @@ import {
 let currentPeriod = 'today';
 let editingId = null;
 let settings = loadSettings();
+let expenseComposing = false;
 
 const els = {
   periodLabel: document.getElementById('period-label'),
@@ -66,6 +67,7 @@ const els = {
   budgetLabel: document.getElementById('budget-label'),
   budgetHint: document.getElementById('budget-hint'),
   btnExport: document.getElementById('btn-export'),
+  submitBtn: document.getElementById('submit-btn'),
   newCatName: document.getElementById('new-cat-name'),
   newCatIcon: document.getElementById('new-cat-icon'),
   newCatKeywords: document.getElementById('new-cat-keywords'),
@@ -101,8 +103,32 @@ function bindEvents() {
 
   els.expenseForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    handleAdd();
+    queueExpenseSubmit();
   });
+
+  els.submitBtn.addEventListener('click', () => {
+    queueExpenseSubmit();
+  });
+
+  els.expenseInput.addEventListener('compositionstart', () => {
+    expenseComposing = true;
+  });
+
+  els.expenseInput.addEventListener('compositionend', () => {
+    expenseComposing = false;
+  });
+
+  els.expenseInput.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (e.isComposing || expenseComposing) {
+      e.preventDefault();
+      return;
+    }
+    e.preventDefault();
+    queueExpenseSubmit();
+  });
+
+  bindImeSafeInput(els.expenseInput);
 
   els.btnSettings.addEventListener('click', () => {
     els.darkTheme.checked = settings.darkTheme;
@@ -166,7 +192,34 @@ function bindEvents() {
     els.editCategory.value = detectCategory(els.editDesc.value.trim());
   });
 
+  bindImeSafeInput(els.editDesc);
+
   els.btnAddCategory.addEventListener('click', handleAddCategory);
+}
+
+function bindImeSafeInput(input) {
+  input.addEventListener('compositionstart', () => {
+    input.dataset.composing = '1';
+  });
+  input.addEventListener('compositionend', () => {
+    delete input.dataset.composing;
+  });
+}
+
+function isInputComposing(input) {
+  return input.dataset.composing === '1';
+}
+
+function queueExpenseSubmit() {
+  if (expenseComposing || isInputComposing(els.expenseInput)) {
+    const onEnd = () => {
+      els.expenseInput.removeEventListener('compositionend', onEnd);
+      requestAnimationFrame(() => handleAdd());
+    };
+    els.expenseInput.addEventListener('compositionend', onEnd, { once: true });
+    return;
+  }
+  requestAnimationFrame(() => handleAdd());
 }
 
 function handleAdd() {

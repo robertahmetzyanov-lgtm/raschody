@@ -66,9 +66,13 @@
           class="expense-input"
           placeholder="кофе 250"
           autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          inputmode="text"
           enterkeyhint="done"
         >
-        <button type="submit" class="submit-btn" id="submit-btn">+</button>
+        <button type="button" class="submit-btn" id="submit-btn" aria-label="Добавить">+</button>
       </form>
     </footer>
   </div>
@@ -79,7 +83,7 @@
       <h2>Изменить</h2>
       <label>
         Описание
-        <input type="text" id="edit-desc" required>
+        <input type="text" id="edit-desc" required autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text">
       </label>
       <label>
         Сумма, ₽
