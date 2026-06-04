@@ -1,6 +1,6 @@
 /** Основные категории и автоопределение по описанию */
 import { loadCustomCategories } from './customCategories.js';
-import { getCategoryRule } from './categoryRules.js';
+import { matchUserKeywordCategory } from './categoryRules.js';
 
 /** «Привычки» — отдельный блок «можно сэкономить» (Pro: все, Free: только кофе) */
 export const FREE_SAVINGS_CATEGORY_ID = 'coffee';
@@ -269,10 +269,10 @@ export function detectCategory(description) {
   const text = (description || '').toLowerCase().trim();
   if (!text || text === '—') return 'other';
 
-  const remembered = getCategoryRule(description);
-  if (remembered) {
+  const learned = matchUserKeywordCategory(description);
+  if (learned) {
     const map = getCategoryMap();
-    if (map[remembered]) return remembered;
+    if (map[learned]) return learned;
   }
 
   if (isHousingItem(text)) return 'housing';
