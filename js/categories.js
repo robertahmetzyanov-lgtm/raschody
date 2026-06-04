@@ -14,6 +14,34 @@ export const SAVINGS_CATEGORY_IDS = [
 /** Обязательные платежи — отдельный блок «Долги» */
 export const DEBT_CATEGORY_IDS = ['debts'];
 
+/** Категории без Pro */
+export const FREE_TIER_CATEGORY_IDS = [
+  'groceries',
+  'housing',
+  'coffee',
+  'transport',
+  'other',
+  'debts',
+  'entertainment',
+  'health',
+];
+
+export function isFreeTierCategory(id) {
+  return FREE_TIER_CATEGORY_IDS.includes(id);
+}
+
+export function restrictCategoryForTier(categoryId, isPro) {
+  if (isPro) return categoryId || 'other';
+  const id = categoryId || 'other';
+  return isFreeTierCategory(id) ? id : 'other';
+}
+
+export function getCategoriesForTier(isPro) {
+  const all = getAllCategories();
+  if (isPro) return all;
+  return all.filter((c) => isFreeTierCategory(c.id) && !c.custom);
+}
+
 /** Встроенные категории */
 export const BUILTIN_CATEGORIES = [
   {
@@ -239,49 +267,53 @@ export function getCategory(id) {
   return map[id] || map.other;
 }
 
-export function resolveCategoryId(storedId, description) {
-  const detected = detectCategory(description);
+export function resolveCategoryId(storedId, description, isPro = true) {
+  const detected = detectCategory(description, isPro);
   const map = getCategoryMap();
 
   if (!storedId || LEGACY_CATEGORY_IDS.has(storedId)) {
     if (storedId === 'marketplace') {
-      if (detected === 'housing' || detected === 'clothing') return detected;
-      return 'shopping';
+      if (detected === 'housing' || (isPro && detected === 'clothing')) {
+        return restrictCategoryForTier(detected, isPro);
+      }
+      return restrictCategoryForTier('shopping', isPro);
     }
     return detected;
   }
   if (!map[storedId]) return detected;
 
-  // Свои категории — не перезаписываем автоопределением
-  if (storedId.startsWith('custom_')) return storedId;
+  if (storedId.startsWith('custom_')) {
+    return isPro ? storedId : 'other';
+  }
 
-  // Пересчёт после разделения категорий
   if (storedId === 'eating_out' && detected === 'coffee') return 'coffee';
-  if (storedId === 'shopping' && detected === 'clothing') return 'clothing';
-  if (storedId === 'eating_out' && detected === 'cigarettes') return 'cigarettes';
+  if (isPro && storedId === 'shopping' && detected === 'clothing') return 'clothing';
+  if (storedId === 'eating_out' && detected === 'cigarettes') {
+    return restrictCategoryForTier('cigarettes', isPro);
+  }
   if (storedId === 'housing' && detected === 'debts') return 'debts';
   if (storedId === 'shopping' && detected === 'housing') return 'housing';
 
-  return storedId;
+  return restrictCategoryForTier(storedId, isPro);
 }
 
-export function detectCategory(description) {
+export function detectCategory(description, isPro = true) {
   const text = (description || '').toLowerCase().trim();
   if (!text || text === '—') return 'other';
 
   const learned = matchUserKeywordCategory(description);
   if (learned) {
     const map = getCategoryMap();
-    if (map[learned]) return learned;
+    if (map[learned]) return restrictCategoryForTier(learned, isPro);
   }
 
   if (isHousingItem(text)) return 'housing';
-  if (isClothingItem(text)) return 'clothing';
+  if (isClothingItem(text)) return restrictCategoryForTier('clothing', isPro);
 
   let bestId = 'other';
   let bestLen = 0;
 
-  for (const cat of getAllCategories()) {
+  for (const cat of getCategoriesForTier(isPro)) {
     if (cat.id === 'other') continue;
     for (const kw of cat.keywords || []) {
       if (text.includes(kw) && kw.length > bestLen) {
@@ -291,18 +323,18 @@ export function detectCategory(description) {
     }
   }
 
-  return bestId;
+  return restrictCategoryForTier(bestId, isPro);
 }
 
-export function groupByCategory(expenses) {
+export function groupByCategory(expenses, isPro = true) {
   const groups = new Map();
 
-  for (const cat of getAllCategories()) {
+  for (const cat of getCategoriesForTier(isPro)) {
     groups.set(cat.id, { category: cat, items: [], total: 0 });
   }
 
   for (const expense of expenses) {
-    const catId = resolveCategoryId(expense.categoryId, expense.description);
+    const catId = resolveCategoryId(expense.categoryId, expense.description, isPro);
     const target = groups.get(catId) || groups.get('other');
     target.items.push({ ...expense, categoryId: catId });
     target.total += expense.amount;

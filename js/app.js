@@ -1,9 +1,10 @@
 import { parseExpenseInput } from './parser.js';
 import {
-  getAllCategories,
+  getCategoriesForTier,
   groupByCategory,
   splitExpenseGroups,
   detectCategory,
+  resolveCategoryId,
   getCategory,
   FREE_SAVINGS_CATEGORY_ID,
   SAVINGS_CATEGORY_IDS,
@@ -23,7 +24,6 @@ import {
   saveSettings,
   getExpensesForPeriod,
   sumAmount,
-  canAddToday,
   exportCsv,
 } from './store.js';
 import {
@@ -149,6 +149,7 @@ function bindEvents() {
     settings.isPro = els.proMode.checked;
     saveSettings(settings);
     updateProFieldsVisibility();
+    populateCategorySelect();
     render();
   });
 
@@ -189,7 +190,7 @@ function bindEvents() {
 
   els.editDesc.addEventListener('input', () => {
     if (!editingId) return;
-    els.editCategory.value = detectCategory(els.editDesc.value.trim());
+    els.editCategory.value = detectCategory(els.editDesc.value.trim(), settings.isPro);
   });
 
   bindImeSafeInput(els.editDesc);
@@ -229,11 +230,6 @@ function handleAdd() {
     return;
   }
 
-  if (!canAddToday(settings)) {
-    shakeInput();
-    return;
-  }
-
   addExpense(parsed.description, parsed.amount);
   els.expenseInput.value = '';
   render();
@@ -248,7 +244,7 @@ function shakeInput() {
 function render() {
   const expenses = getExpensesForPeriod(currentPeriod);
   const total = sumAmount(expenses);
-  const groups = groupByCategory(expenses);
+  const groups = groupByCategory(expenses, settings.isPro);
   const split = splitExpenseGroups(groups);
   const { savings, regular, savingsTotal } = applyFreeTierLimits(split.savings, split.regular);
 
@@ -405,7 +401,7 @@ function createExpenseList(items) {
 
 function populateCategorySelect() {
   let html = '';
-  const all = getAllCategories();
+  const all = getCategoriesForTier(settings.isPro);
   const builtin = all.filter((c) => !c.custom);
   const custom = all.filter((c) => c.custom);
 
@@ -501,7 +497,11 @@ function openEdit(expense) {
   editingId = expense.id;
   els.editDesc.value = expense.description === '—' ? '' : expense.description;
   els.editAmount.value = expense.amount;
-  els.editCategory.value = expense.categoryId || detectCategory(expense.description);
+  els.editCategory.value = resolveCategoryId(
+    expense.categoryId,
+    expense.description,
+    settings.isPro,
+  );
   els.editDialog.showModal();
 }
 

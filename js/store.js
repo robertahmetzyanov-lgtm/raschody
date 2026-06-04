@@ -3,7 +3,6 @@ import { saveCategoryRule } from './categoryRules.js';
 
 const STORAGE_KEY = 'raschody_expenses_v1';
 const SETTINGS_KEY = 'raschody_settings_v1';
-const FREE_DAILY_LIMIT = 5;
 
 export function loadSettings() {
   try {
@@ -43,23 +42,25 @@ export function saveExpenses(expenses) {
 
 function normalizeExpense(e) {
   const description = e.description;
+  const isPro = loadSettings().isPro;
   return {
     id: e.id,
     description,
     amount: e.amount,
     createdAt: e.createdAt,
-    categoryId: resolveCategoryId(e.categoryId, description),
+    categoryId: resolveCategoryId(e.categoryId, description, isPro),
   };
 }
 
 export function addExpense(description, amount, categoryId) {
+  const isPro = loadSettings().isPro;
   const expenses = loadExpenses();
   const expense = {
     id: crypto.randomUUID(),
     description,
     amount,
     createdAt: new Date().toISOString(),
-    categoryId: categoryId || detectCategory(description),
+    categoryId: categoryId || detectCategory(description, isPro),
   };
   expenses.unshift(expense);
   saveExpenses(expenses);
@@ -67,6 +68,7 @@ export function addExpense(description, amount, categoryId) {
 }
 
 export function updateExpense(id, description, amount, categoryId) {
+  const isPro = loadSettings().isPro;
   const expenses = loadExpenses();
   const idx = expenses.findIndex((e) => e.id === id);
   if (idx === -1) return null;
@@ -74,7 +76,7 @@ export function updateExpense(id, description, amount, categoryId) {
     ...expenses[idx],
     description,
     amount,
-    categoryId: categoryId || detectCategory(description),
+    categoryId: categoryId || detectCategory(description, isPro),
   };
   if (categoryId) {
     saveCategoryRule(description, categoryId);
@@ -98,16 +100,6 @@ export function reassignCategory(fromId, toId = 'other') {
     }
   }
   if (changed) saveExpenses(expenses);
-}
-
-export function countTodayExpenses() {
-  const start = startOfDay(new Date());
-  return loadExpenses().filter((e) => new Date(e.createdAt) >= start).length;
-}
-
-export function canAddToday(settings) {
-  if (settings.isPro) return true;
-  return countTodayExpenses() < FREE_DAILY_LIMIT;
 }
 
 export function getExpensesForPeriod(period) {
@@ -173,5 +165,3 @@ function escapeCsv(val) {
   }
   return s;
 }
-
-export { FREE_DAILY_LIMIT };
