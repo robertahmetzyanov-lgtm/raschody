@@ -24,8 +24,8 @@ import {
   saveSettings,
   getExpensesForPeriod,
   sumAmount,
-  exportCsv,
 } from './store.js';
+import { exportProData } from './exportReport.js';
 import {
   formatMoney,
   formatTime,
@@ -162,7 +162,7 @@ function bindEvents() {
 
   els.btnExport.addEventListener('click', () => {
     if (!settings.isPro) return;
-    exportCsv();
+    exportProData();
   });
 
   els.editForm.addEventListener('submit', (e) => {

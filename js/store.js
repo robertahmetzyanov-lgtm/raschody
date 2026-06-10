@@ -1,4 +1,4 @@
-import { detectCategory, getCategory, resolveCategoryId } from './categories.js';
+import { detectCategory, resolveCategoryId } from './categories.js';
 import { saveCategoryRule } from './categoryRules.js';
 
 const STORAGE_KEY = 'raschody_expenses_v1';
@@ -133,35 +133,4 @@ function startOfMonth(d) {
 
 export function sumAmount(expenses) {
   return expenses.reduce((s, e) => s + e.amount, 0);
-}
-
-export function exportCsv() {
-  const rows = [['Дата', 'Время', 'Категория', 'Описание', 'Сумма']];
-  for (const e of loadExpenses()) {
-    const d = new Date(e.createdAt);
-    rows.push([
-      d.toLocaleDateString('ru-RU'),
-      d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
-      getCategory(e.categoryId).name,
-      e.description,
-      String(e.amount),
-    ]);
-  }
-  const bom = '\uFEFF';
-  const csv = bom + rows.map((r) => r.map(escapeCsv).join(';')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `raschody_${new Date().toISOString().slice(0, 10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function escapeCsv(val) {
-  const s = String(val);
-  if (s.includes(';') || s.includes('"') || s.includes('\n')) {
-    return `"${s.replace(/"/g, '""')}"`;
-  }
-  return s;
 }
