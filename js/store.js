@@ -40,6 +40,24 @@ export function saveExpenses(expenses) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
 }
 
+const SEED_IMPORT_KEY = 'raschody_excel_seed_v2';
+
+/** Загрузить расходы из data/expenses-seed.json (импорт из Excel) */
+export async function importExpensesFromSeed(force = false) {
+  if (!force && localStorage.getItem(SEED_IMPORT_KEY) === '1') return false;
+  try {
+    const res = await fetch('./data/expenses-seed.json');
+    if (!res.ok) return false;
+    const items = await res.json();
+    if (!Array.isArray(items) || !items.length) return false;
+    saveExpenses(items);
+    localStorage.setItem(SEED_IMPORT_KEY, '1');
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function normalizeExpense(e) {
   const description = e.description;
   const isPro = loadSettings().isPro;

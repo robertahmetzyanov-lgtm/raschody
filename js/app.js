@@ -24,6 +24,7 @@ import {
   saveSettings,
   getExpensesForPeriod,
   sumAmount,
+  importExpensesFromSeed,
 } from './store.js';
 import { exportProData } from './exportReport.js';
 import {
@@ -82,7 +83,9 @@ const els = {
 
 init();
 
-function init() {
+async function init() {
+  const reimport = new URLSearchParams(location.search).has('reimport');
+  await importExpensesFromSeed(reimport);
   populateCategorySelect();
   applyTheme();
   updateProFieldsVisibility();
@@ -160,9 +163,17 @@ function bindEvents() {
     render();
   });
 
-  els.btnExport.addEventListener('click', () => {
+  els.btnExport.addEventListener('click', async () => {
     if (!settings.isPro) return;
-    exportProData();
+    const label = els.btnExport.textContent;
+    els.btnExport.disabled = true;
+    els.btnExport.textContent = 'Формирование…';
+    try {
+      await exportProData();
+    } finally {
+      els.btnExport.disabled = false;
+      els.btnExport.textContent = label;
+    }
   });
 
   els.editForm.addEventListener('submit', (e) => {
