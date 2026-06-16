@@ -6,8 +6,6 @@ import {
   detectCategory,
   resolveCategoryId,
   getCategory,
-  FREE_SAVINGS_CATEGORY_ID,
-  SAVINGS_CATEGORY_IDS,
 } from './categories.js';
 import {
   loadCustomCategories,
@@ -27,6 +25,10 @@ import {
   importExpensesFromSeed,
 } from './store.js';
 import { exportProData } from './exportReport.js';
+import {
+  CATEGORY_ICON_OPTIONS,
+  DEFAULT_CATEGORY_ICON,
+} from './categoryIcons.js';
 import {
   formatMoney,
   formatTime,
@@ -62,8 +64,6 @@ const els = {
   btnDelete: document.getElementById('btn-delete'),
   settingsDialog: document.getElementById('settings-dialog'),
   btnSettings: document.getElementById('btn-settings'),
-  darkTheme: document.getElementById('dark-theme'),
-  proMode: document.getElementById('pro-mode'),
   monthlyBudget: document.getElementById('monthly-budget'),
   budgetLabel: document.getElementById('budget-label'),
   budgetHint: document.getElementById('budget-hint'),
@@ -71,6 +71,8 @@ const els = {
   submitBtn: document.getElementById('submit-btn'),
   newCatName: document.getElementById('new-cat-name'),
   newCatIcon: document.getElementById('new-cat-icon'),
+  selectedCatIcon: document.getElementById('selected-cat-icon'),
+  iconPicker: document.getElementById('icon-picker'),
   newCatKeywords: document.getElementById('new-cat-keywords'),
   newCatSavings: document.getElementById('new-cat-savings'),
   newCatDebt: document.getElementById('new-cat-debt'),
@@ -88,7 +90,7 @@ async function init() {
   await importExpensesFromSeed(reimport);
   populateCategorySelect();
   applyTheme();
-  updateProFieldsVisibility();
+  initIconPicker();
   bindEvents();
   render();
   registerServiceWorker();
@@ -134,26 +136,10 @@ function bindEvents() {
   bindImeSafeInput(els.expenseInput);
 
   els.btnSettings.addEventListener('click', () => {
-    els.darkTheme.checked = settings.darkTheme;
-    els.proMode.checked = settings.isPro;
     els.monthlyBudget.value = settings.monthlyBudget ?? '';
-    updateProFieldsVisibility();
-    if (settings.isPro) renderCustomCategoryList();
+    renderCustomCategoryList();
+    resetIconPicker();
     els.settingsDialog.showModal();
-  });
-
-  els.darkTheme.addEventListener('change', () => {
-    settings.darkTheme = els.darkTheme.checked;
-    saveSettings(settings);
-    applyTheme();
-  });
-
-  els.proMode.addEventListener('change', () => {
-    settings.isPro = els.proMode.checked;
-    saveSettings(settings);
-    updateProFieldsVisibility();
-    populateCategorySelect();
-    render();
   });
 
   els.monthlyBudget.addEventListener('change', () => {
@@ -164,7 +150,6 @@ function bindEvents() {
   });
 
   els.btnExport.addEventListener('click', async () => {
-    if (!settings.isPro) return;
     const label = els.btnExport.textContent;
     els.btnExport.disabled = true;
     els.btnExport.textContent = 'Формирование…';
@@ -201,7 +186,7 @@ function bindEvents() {
 
   els.editDesc.addEventListener('input', () => {
     if (!editingId) return;
-    els.editCategory.value = detectCategory(els.editDesc.value.trim(), settings.isPro);
+    els.editCategory.value = detectCategory(els.editDesc.value.trim(), true);
   });
 
   bindImeSafeInput(els.editDesc);
@@ -255,9 +240,13 @@ function shakeInput() {
 function render() {
   const expenses = getExpensesForPeriod(currentPeriod);
   const total = sumAmount(expenses);
-  const groups = groupByCategory(expenses, settings.isPro);
+  const groups = groupByCategory(expenses, true);
   const split = splitExpenseGroups(groups);
-  const { savings, regular, savingsTotal } = applyFreeTierLimits(split.savings, split.regular);
+  const { savings, regular, savingsTotal } = {
+    savings: split.savings,
+    regular: split.regular,
+    savingsTotal: split.savings.reduce((s, g) => s + g.total, 0),
+  };
 
   renderSummary(total, expenses.length, savingsTotal, split.debtsTotal);
   renderDebtsPanel(split.debts, split.debtsTotal, total);
@@ -265,36 +254,6 @@ function render() {
   renderCategoryBreakdown(regular);
   renderList(expenses);
   checkBudgetWarning();
-}
-
-function applyFreeTierLimits(savings, regular) {
-  if (settings.isPro) {
-    return {
-      savings,
-      regular,
-      savingsTotal: savings.reduce((s, g) => s + g.total, 0),
-    };
-  }
-
-  const freeSavings = [];
-  const mergedRegular = [...regular];
-
-  for (const g of savings) {
-    if (g.category.id === FREE_SAVINGS_CATEGORY_ID) {
-      freeSavings.push(g);
-    } else {
-      mergedRegular.push(g);
-    }
-  }
-
-  mergedRegular.sort((a, b) => b.total - a.total);
-  return {
-    savings: freeSavings,
-    regular: mergedRegular.filter(
-      (g) => !SAVINGS_CATEGORY_IDS.includes(g.category.id),
-    ),
-    savingsTotal: freeSavings.reduce((s, g) => s + g.total, 0),
-  };
 }
 
 function renderSummary(total, count, savingsTotal, debtsTotal) {
@@ -412,7 +371,7 @@ function createExpenseList(items) {
 
 function populateCategorySelect() {
   let html = '';
-  const all = getCategoriesForTier(settings.isPro);
+  const all = getCategoriesForTier(true);
   const builtin = all.filter((c) => !c.custom);
   const custom = all.filter((c) => c.custom);
 
@@ -462,8 +421,6 @@ function renderCustomCategoryList() {
 }
 
 function handleAddCategory() {
-  if (!settings.isPro) return;
-
   const name = els.newCatName.value.trim();
   if (!name) {
     els.newCatName.focus();
@@ -484,7 +441,7 @@ function handleAddCategory() {
   });
 
   els.newCatName.value = '';
-  els.newCatIcon.value = '📌';
+  resetIconPicker();
   els.newCatKeywords.value = '';
   els.newCatSavings.checked = false;
   els.newCatDebt.checked = false;
@@ -511,7 +468,7 @@ function openEdit(expense) {
   els.editCategory.value = resolveCategoryId(
     expense.categoryId,
     expense.description,
-    settings.isPro,
+    true,
   );
   els.editDialog.showModal();
 }
@@ -522,7 +479,7 @@ function checkBudgetWarning() {
   els.periodTotal.classList.remove('budget-ok', 'budget-warn', 'budget-over', 'over-budget');
   els.summarySub.classList.remove('summary-sub--budget-warn', 'summary-sub--budget-over');
 
-  if (!settings.isPro || !settings.monthlyBudget) return;
+  if (!settings.monthlyBudget) return;
 
   const budget = settings.monthlyBudget;
   const monthTotal = sumAmount(getExpensesForPeriod('month'));
@@ -551,16 +508,35 @@ function prependSummarySub(line) {
   els.summarySub.textContent = existing ? `${line} · ${existing}` : line;
 }
 
-function updateProFieldsVisibility() {
-  const pro = settings.isPro;
-  els.budgetLabel.hidden = !pro;
-  els.budgetHint.hidden = !pro;
-  els.btnExport.hidden = !pro;
-  els.customCatSection.hidden = !pro;
+function applyTheme() {
+  document.documentElement.dataset.theme = 'light';
 }
 
-function applyTheme() {
-  document.documentElement.dataset.theme = settings.darkTheme ? 'dark' : 'light';
+function initIconPicker() {
+  els.iconPicker.innerHTML = '';
+  for (const icon of CATEGORY_ICON_OPTIONS) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'icon-picker-btn';
+    btn.textContent = icon;
+    btn.setAttribute('role', 'option');
+    btn.setAttribute('aria-label', icon);
+    btn.addEventListener('click', () => selectCategoryIcon(icon, btn));
+    els.iconPicker.appendChild(btn);
+  }
+  selectCategoryIcon(DEFAULT_CATEGORY_ICON);
+}
+
+function selectCategoryIcon(icon, activeBtn) {
+  els.newCatIcon.value = icon;
+  els.selectedCatIcon.textContent = icon;
+  els.iconPicker.querySelectorAll('.icon-picker-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn === activeBtn || (!activeBtn && btn.textContent === icon));
+  });
+}
+
+function resetIconPicker() {
+  selectCategoryIcon(DEFAULT_CATEGORY_ICON);
 }
 
 function plural(n, one, few, many) {

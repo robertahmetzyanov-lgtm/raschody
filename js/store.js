@@ -8,7 +8,10 @@ export function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (!raw) return defaultSettings();
-    return { ...defaultSettings(), ...JSON.parse(raw) };
+    const merged = { ...defaultSettings(), ...JSON.parse(raw) };
+    merged.darkTheme = false;
+    merged.isPro = true;
+    return merged;
   } catch {
     return defaultSettings();
   }
@@ -20,8 +23,8 @@ export function saveSettings(settings) {
 
 function defaultSettings() {
   return {
-    darkTheme: true,
-    isPro: false,
+    darkTheme: false,
+    isPro: true,
     monthlyBudget: null,
   };
 }

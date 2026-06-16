@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#1a1a2e">
+  <meta name="theme-color" content="#eef4ef">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Расходы">
@@ -104,21 +104,13 @@
   <dialog id="settings-dialog" class="dialog">
     <form method="dialog" class="dialog-form">
       <h2>Настройки</h2>
-      <label class="toggle-row">
-        <span>Тёмная тема</span>
-        <input type="checkbox" id="dark-theme">
-      </label>
-      <label class="toggle-row pro-row">
-        <span>Pro</span>
-        <input type="checkbox" id="pro-mode">
-      </label>
-      <label id="budget-label" hidden>
+      <label id="budget-label">
         Бюджет на месяц, ₽
         <input type="number" id="monthly-budget" min="0" step="1000" placeholder="40000">
       </label>
-      <p class="hint" id="budget-hint" hidden>Pro: предупреждение при превышении бюджета</p>
+      <p class="hint" id="budget-hint">Предупреждение при превышении бюджета</p>
 
-      <div class="settings-section pro-only" id="custom-cat-section" hidden>
+      <div class="settings-section" id="custom-cat-section">
         <h3 class="settings-section-title">Мои категории</h3>
         <p class="hint" id="custom-cat-hint">Свои категории появятся в списке при редактировании траты.</p>
         <div class="custom-cat-form" id="custom-cat-form">
@@ -126,10 +118,11 @@
             Название
             <input type="text" id="new-cat-name" placeholder="Дети" maxlength="30">
           </label>
-          <label class="custom-cat-icon-label">
-            Иконка
-            <input type="text" id="new-cat-icon" placeholder="👶" maxlength="4" value="📌">
-          </label>
+          <div class="custom-cat-icon-field">
+            <span class="field-label">Иконка <span class="icon-picker-preview" id="selected-cat-icon">📌</span></span>
+            <input type="hidden" id="new-cat-icon" value="📌">
+            <div class="icon-picker" id="icon-picker" role="listbox" aria-label="Выбор иконки"></div>
+          </div>
           <label>
             Слова для автоопределения
             <input type="text" id="new-cat-keywords" placeholder="памперсы, детский сад">
@@ -148,7 +141,7 @@
       </div>
 
       <div class="dialog-actions">
-        <button type="button" class="btn-secondary" id="btn-export" hidden>Экспорт PDF</button>
+        <button type="button" class="btn-secondary" id="btn-export">Экспорт PDF</button>
         <button type="submit" class="btn-primary">Готово</button>
       </div>
     </form>

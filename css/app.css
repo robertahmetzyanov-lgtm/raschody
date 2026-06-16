@@ -791,7 +791,8 @@ html, body {
 .pro-only[hidden],
 #budget-label[hidden],
 #budget-hint[hidden],
-#btn-export[hidden] {
+#btn-export[hidden],
+#custom-cat-section[hidden] {
   display: none !important;
 }
 
@@ -807,10 +808,54 @@ html, body {
   gap: 10px;
 }
 
-.custom-cat-icon-label input {
-  max-width: 80px;
-  text-align: center;
+.custom-cat-icon-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.custom-cat-icon-field .field-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.icon-picker-preview {
   font-size: 1.25rem;
+  margin-left: 6px;
+}
+
+.icon-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 8px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.icon-picker-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.icon-picker-btn.active {
+  border-color: var(--accent);
+  background: rgba(90, 145, 112, 0.15);
+  box-shadow: 0 0 0 2px rgba(90, 145, 112, 0.25);
+}
+
+.icon-picker-btn:active {
+  transform: scale(0.95);
 }
 
 .btn-block {
