@@ -28,7 +28,15 @@ import { exportProData } from './exportReport.js';
 import {
   CATEGORY_ICON_OPTIONS,
   DEFAULT_CATEGORY_ICON,
+  suggestCategoryIcon,
 } from './categoryIcons.js';
+import {
+  refreshWordDictionary,
+  getTypingWord,
+  getWordSuggestions,
+  correctExpenseInput,
+  applyWordSuggestion,
+} from './wordSuggest.js';
 import {
   formatMoney,
   formatTime,
@@ -40,6 +48,8 @@ let currentPeriod = 'today';
 let editingId = null;
 let settings = loadSettings();
 let expenseComposing = false;
+let iconManualOverride = false;
+let pendingSubmit = false;
 
 const els = {
   periodLabel: document.getElementById('period-label'),
@@ -56,6 +66,7 @@ const els = {
   debtsSub: document.getElementById('debts-sub'),
   expenseForm: document.getElementById('expense-form'),
   expenseInput: document.getElementById('expense-input'),
+  inputSuggestions: document.getElementById('input-suggestions'),
   editDialog: document.getElementById('edit-dialog'),
   editForm: document.getElementById('edit-form'),
   editDesc: document.getElementById('edit-desc'),
@@ -88,6 +99,7 @@ init();
 async function init() {
   const reimport = new URLSearchParams(location.search).has('reimport');
   await importExpensesFromSeed(reimport);
+  refreshWordDictionary();
   populateCategorySelect();
   applyTheme();
   initIconPicker();
@@ -121,9 +133,23 @@ function bindEvents() {
 
   els.expenseInput.addEventListener('compositionend', () => {
     expenseComposing = false;
+    if (pendingSubmit) {
+      pendingSubmit = false;
+      queueExpenseSubmit();
+    } else {
+      updateInputSuggestions();
+    }
+  });
+
+  els.expenseInput.addEventListener('input', () => {
+    updateInputSuggestions();
   });
 
   els.expenseInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && !e.shiftKey && pickFirstSuggestion()) {
+      e.preventDefault();
+      return;
+    }
     if (e.key !== 'Enter') return;
     if (e.isComposing || expenseComposing) {
       e.preventDefault();
@@ -138,6 +164,7 @@ function bindEvents() {
   els.btnSettings.addEventListener('click', () => {
     els.monthlyBudget.value = settings.monthlyBudget ?? '';
     renderCustomCategoryList();
+    iconManualOverride = false;
     resetIconPicker();
     els.settingsDialog.showModal();
   });
@@ -164,7 +191,7 @@ function bindEvents() {
   els.editForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!editingId) return;
-    const desc = els.editDesc.value.trim();
+    const desc = correctExpenseInput(els.editDesc.value.trim());
     updateExpense(
       editingId,
       desc,
@@ -191,6 +218,9 @@ function bindEvents() {
 
   bindImeSafeInput(els.editDesc);
 
+  els.newCatName.addEventListener('input', updateSuggestedIcon);
+  els.newCatKeywords.addEventListener('input', updateSuggestedIcon);
+
   els.btnAddCategory.addEventListener('click', handleAddCategory);
 }
 
@@ -209,27 +239,69 @@ function isInputComposing(input) {
 
 function queueExpenseSubmit() {
   if (expenseComposing || isInputComposing(els.expenseInput)) {
-    const onEnd = () => {
-      els.expenseInput.removeEventListener('compositionend', onEnd);
-      requestAnimationFrame(() => handleAdd());
-    };
-    els.expenseInput.addEventListener('compositionend', onEnd, { once: true });
+    pendingSubmit = true;
     return;
   }
-  requestAnimationFrame(() => handleAdd());
+  pendingSubmit = false;
+  setTimeout(() => handleAdd(), 50);
 }
 
 function handleAdd() {
-  const parsed = parseExpenseInput(els.expenseInput.value);
+  const raw = els.expenseInput.value;
+  const corrected = correctExpenseInput(raw);
+  if (corrected !== raw) {
+    els.expenseInput.value = corrected;
+  }
+
+  const parsed = parseExpenseInput(corrected);
   if (!parsed) {
     shakeInput();
     return;
   }
 
   addExpense(parsed.description, parsed.amount);
+  refreshWordDictionary();
   els.expenseInput.value = '';
+  hideInputSuggestions();
   render();
   els.expenseInput.focus();
+}
+
+function updateInputSuggestions() {
+  const word = getTypingWord(els.expenseInput.value);
+  const suggestions = getWordSuggestions(word);
+  if (!word || word.length < 2 || !suggestions.length) {
+    hideInputSuggestions();
+    return;
+  }
+
+  els.inputSuggestions.hidden = false;
+  els.inputSuggestions.innerHTML = '';
+  for (const suggestion of suggestions) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'input-suggestion-btn';
+    btn.textContent = suggestion;
+    btn.addEventListener('click', () => {
+      els.expenseInput.value = applyWordSuggestion(els.expenseInput.value, suggestion);
+      hideInputSuggestions();
+      els.expenseInput.focus();
+    });
+    els.inputSuggestions.appendChild(btn);
+  }
+}
+
+function hideInputSuggestions() {
+  els.inputSuggestions.hidden = true;
+  els.inputSuggestions.innerHTML = '';
+}
+
+function pickFirstSuggestion() {
+  const btn = els.inputSuggestions.querySelector('.input-suggestion-btn');
+  if (!btn || els.inputSuggestions.hidden) return false;
+  els.expenseInput.value = applyWordSuggestion(els.expenseInput.value, btn.textContent);
+  hideInputSuggestions();
+  return true;
 }
 
 function shakeInput() {
@@ -434,7 +506,9 @@ function handleAddCategory() {
 
   addCustomCategory({
     name,
-    icon: els.newCatIcon.value.trim() || '📌',
+    icon: iconManualOverride
+      ? (els.newCatIcon.value.trim() || DEFAULT_CATEGORY_ICON)
+      : suggestCategoryIcon(name, els.newCatKeywords.value),
     keywords: els.newCatKeywords.value,
     savings: els.newCatSavings.checked,
     debt: els.newCatDebt.checked,
@@ -447,6 +521,7 @@ function handleAddCategory() {
   els.newCatDebt.checked = false;
 
   populateCategorySelect();
+  refreshWordDictionary();
   renderCustomCategoryList();
   render();
 }
@@ -521,10 +596,19 @@ function initIconPicker() {
     btn.textContent = icon;
     btn.setAttribute('role', 'option');
     btn.setAttribute('aria-label', icon);
-    btn.addEventListener('click', () => selectCategoryIcon(icon, btn));
+    btn.addEventListener('click', () => {
+      iconManualOverride = true;
+      selectCategoryIcon(icon, btn);
+    });
     els.iconPicker.appendChild(btn);
   }
   selectCategoryIcon(DEFAULT_CATEGORY_ICON);
+}
+
+function updateSuggestedIcon() {
+  if (iconManualOverride) return;
+  const icon = suggestCategoryIcon(els.newCatName.value, els.newCatKeywords.value);
+  selectCategoryIcon(icon);
 }
 
 function selectCategoryIcon(icon, activeBtn) {
@@ -536,7 +620,8 @@ function selectCategoryIcon(icon, activeBtn) {
 }
 
 function resetIconPicker() {
-  selectCategoryIcon(DEFAULT_CATEGORY_ICON);
+  iconManualOverride = false;
+  updateSuggestedIcon();
 }
 
 function plural(n, one, few, many) {

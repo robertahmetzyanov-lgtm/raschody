@@ -59,6 +59,7 @@
     </main>
 
     <footer class="input-bar">
+      <div class="input-suggestions" id="input-suggestions" hidden></div>
       <form id="expense-form" class="input-form">
         <input
           type="text"
@@ -120,6 +121,7 @@
           </label>
           <div class="custom-cat-icon-field">
             <span class="field-label">Иконка <span class="icon-picker-preview" id="selected-cat-icon">📌</span></span>
+            <p class="hint icon-auto-hint">Подбирается автоматически по названию</p>
             <input type="hidden" id="new-cat-icon" value="📌">
             <div class="icon-picker" id="icon-picker" role="listbox" aria-label="Выбор иконки"></div>
           </div>

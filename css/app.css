@@ -621,6 +621,36 @@ html, body {
   border-color: rgba(196, 86, 86, 0.35);
 }
 
+.input-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.input-suggestions[hidden] {
+  display: none !important;
+}
+
+.input-suggestion-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.input-suggestion-btn:active {
+  background: rgba(90, 145, 112, 0.15);
+  border-color: var(--accent);
+}
+
+.icon-auto-hint {
+  margin: 0;
+}
+
 .input-form {
   display: flex;
   gap: 8px;
