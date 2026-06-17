@@ -55,3 +55,9 @@ export function suggestCategoryIcon(name, keywordsRaw = '') {
 
   return DEFAULT_CATEGORY_ICON;
 }
+
+export function getNextCategoryIcon(current) {
+  const idx = CATEGORY_ICON_OPTIONS.indexOf(current);
+  const next = idx >= 0 ? (idx + 1) % CATEGORY_ICON_OPTIONS.length : 0;
+  return CATEGORY_ICON_OPTIONS[next];
+}

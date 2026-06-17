@@ -115,16 +115,17 @@
         <h3 class="settings-section-title">Мои категории</h3>
         <p class="hint" id="custom-cat-hint">Свои категории появятся в списке при редактировании траты.</p>
         <div class="custom-cat-form" id="custom-cat-form">
-          <label>
-            Название
-            <input type="text" id="new-cat-name" placeholder="Дети" maxlength="30">
+          <label class="custom-cat-name-row">
+            <span class="field-label">Название</span>
+            <div class="name-with-icon">
+              <button type="button" class="icon-cycle-btn" id="icon-cycle-btn" aria-label="Сменить иконку">
+                <span id="selected-cat-icon">📌</span>
+              </button>
+              <input type="text" id="new-cat-name" placeholder="Дети" maxlength="30">
+            </div>
+            <span class="hint icon-auto-hint">Иконка подбирается сама — нажмите на неё, чтобы сменить</span>
           </label>
-          <div class="custom-cat-icon-field">
-            <span class="field-label">Иконка <span class="icon-picker-preview" id="selected-cat-icon">📌</span></span>
-            <p class="hint icon-auto-hint">Подбирается автоматически по названию</p>
-            <input type="hidden" id="new-cat-icon" value="📌">
-            <div class="icon-picker" id="icon-picker" role="listbox" aria-label="Выбор иконки"></div>
-          </div>
+          <input type="hidden" id="new-cat-icon" value="📌">
           <label>
             Слова для автоопределения
             <input type="text" id="new-cat-keywords" placeholder="памперсы, детский сад">

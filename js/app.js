@@ -26,9 +26,9 @@ import {
 } from './store.js';
 import { exportProData } from './exportReport.js';
 import {
-  CATEGORY_ICON_OPTIONS,
   DEFAULT_CATEGORY_ICON,
   suggestCategoryIcon,
+  getNextCategoryIcon,
 } from './categoryIcons.js';
 import {
   refreshWordDictionary,
@@ -83,7 +83,7 @@ const els = {
   newCatName: document.getElementById('new-cat-name'),
   newCatIcon: document.getElementById('new-cat-icon'),
   selectedCatIcon: document.getElementById('selected-cat-icon'),
-  iconPicker: document.getElementById('icon-picker'),
+  iconCycleBtn: document.getElementById('icon-cycle-btn'),
   newCatKeywords: document.getElementById('new-cat-keywords'),
   newCatSavings: document.getElementById('new-cat-savings'),
   newCatDebt: document.getElementById('new-cat-debt'),
@@ -102,7 +102,6 @@ async function init() {
   refreshWordDictionary();
   populateCategorySelect();
   applyTheme();
-  initIconPicker();
   bindEvents();
   render();
   registerServiceWorker();
@@ -165,7 +164,7 @@ function bindEvents() {
     els.monthlyBudget.value = settings.monthlyBudget ?? '';
     renderCustomCategoryList();
     iconManualOverride = false;
-    resetIconPicker();
+    resetCategoryIcon();
     els.settingsDialog.showModal();
   });
 
@@ -220,6 +219,7 @@ function bindEvents() {
 
   els.newCatName.addEventListener('input', updateSuggestedIcon);
   els.newCatKeywords.addEventListener('input', updateSuggestedIcon);
+  els.iconCycleBtn.addEventListener('click', cycleCategoryIcon);
 
   els.btnAddCategory.addEventListener('click', handleAddCategory);
 }
@@ -506,16 +506,14 @@ function handleAddCategory() {
 
   addCustomCategory({
     name,
-    icon: iconManualOverride
-      ? (els.newCatIcon.value.trim() || DEFAULT_CATEGORY_ICON)
-      : suggestCategoryIcon(name, els.newCatKeywords.value),
+    icon: els.newCatIcon.value.trim() || DEFAULT_CATEGORY_ICON,
     keywords: els.newCatKeywords.value,
     savings: els.newCatSavings.checked,
     debt: els.newCatDebt.checked,
   });
 
   els.newCatName.value = '';
-  resetIconPicker();
+  resetCategoryIcon();
   els.newCatKeywords.value = '';
   els.newCatSavings.checked = false;
   els.newCatDebt.checked = false;
@@ -587,39 +585,22 @@ function applyTheme() {
   document.documentElement.dataset.theme = 'light';
 }
 
-function initIconPicker() {
-  els.iconPicker.innerHTML = '';
-  for (const icon of CATEGORY_ICON_OPTIONS) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'icon-picker-btn';
-    btn.textContent = icon;
-    btn.setAttribute('role', 'option');
-    btn.setAttribute('aria-label', icon);
-    btn.addEventListener('click', () => {
-      iconManualOverride = true;
-      selectCategoryIcon(icon, btn);
-    });
-    els.iconPicker.appendChild(btn);
-  }
-  selectCategoryIcon(DEFAULT_CATEGORY_ICON);
+function setCategoryIcon(icon) {
+  els.newCatIcon.value = icon;
+  els.selectedCatIcon.textContent = icon;
 }
 
 function updateSuggestedIcon() {
   if (iconManualOverride) return;
-  const icon = suggestCategoryIcon(els.newCatName.value, els.newCatKeywords.value);
-  selectCategoryIcon(icon);
+  setCategoryIcon(suggestCategoryIcon(els.newCatName.value, els.newCatKeywords.value));
 }
 
-function selectCategoryIcon(icon, activeBtn) {
-  els.newCatIcon.value = icon;
-  els.selectedCatIcon.textContent = icon;
-  els.iconPicker.querySelectorAll('.icon-picker-btn').forEach((btn) => {
-    btn.classList.toggle('active', btn === activeBtn || (!activeBtn && btn.textContent === icon));
-  });
+function cycleCategoryIcon() {
+  iconManualOverride = true;
+  setCategoryIcon(getNextCategoryIcon(els.newCatIcon.value));
 }
 
-function resetIconPicker() {
+function resetCategoryIcon() {
   iconManualOverride = false;
   updateSuggestedIcon();
 }
