@@ -1,5 +1,6 @@
 import { detectCategory, resolveCategoryId } from './categories.js';
 import { saveCategoryRule } from './categoryRules.js';
+import { fixExpenseDescription, fixExpenseInput } from './textFix.js';
 
 const STORAGE_KEY = 'raschody_expenses_v1';
 const SETTINGS_KEY = 'raschody_settings_v1';
@@ -62,7 +63,7 @@ export async function importExpensesFromSeed(force = false) {
 }
 
 function normalizeExpense(e) {
-  const description = e.description;
+  const description = fixExpenseDescription(e.description);
   const isPro = loadSettings().isPro;
   return {
     id: e.id,
@@ -75,6 +76,7 @@ function normalizeExpense(e) {
 
 export function addExpense(description, amount, categoryId) {
   const isPro = loadSettings().isPro;
+  description = fixExpenseDescription(description);
   const expenses = loadExpenses();
   const expense = {
     id: crypto.randomUUID(),
@@ -90,6 +92,7 @@ export function addExpense(description, amount, categoryId) {
 
 export function updateExpense(id, description, amount, categoryId) {
   const isPro = loadSettings().isPro;
+  description = fixExpenseDescription(description);
   const expenses = loadExpenses();
   const idx = expenses.findIndex((e) => e.id === id);
   if (idx === -1) return null;

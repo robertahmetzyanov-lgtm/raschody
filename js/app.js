@@ -34,7 +34,7 @@ import {
   refreshWordDictionary,
   getTypingWord,
   getWordSuggestions,
-  correctExpenseInput,
+  fixExpenseInput,
   applyWordSuggestion,
 } from './wordSuggest.js';
 import {
@@ -50,6 +50,8 @@ let settings = loadSettings();
 let expenseComposing = false;
 let iconManualOverride = false;
 let pendingSubmit = false;
+let inputPeakValue = '';
+let lastCompositionData = '';
 
 const els = {
   periodLabel: document.getElementById('period-label'),
@@ -122,16 +124,27 @@ function bindEvents() {
     queueExpenseSubmit();
   });
 
+  els.submitBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+  });
+
   els.submitBtn.addEventListener('click', () => {
     queueExpenseSubmit();
   });
 
   els.expenseInput.addEventListener('compositionstart', () => {
     expenseComposing = true;
+    lastCompositionData = '';
   });
 
-  els.expenseInput.addEventListener('compositionend', () => {
+  els.expenseInput.addEventListener('compositionupdate', (e) => {
+    if (e.data) lastCompositionData = e.data;
+  });
+
+  els.expenseInput.addEventListener('compositionend', (e) => {
     expenseComposing = false;
+    if (e.data) lastCompositionData = e.data;
+    syncInputPeak();
     if (pendingSubmit) {
       pendingSubmit = false;
       queueExpenseSubmit();
@@ -141,6 +154,7 @@ function bindEvents() {
   });
 
   els.expenseInput.addEventListener('input', () => {
+    syncInputPeak();
     updateInputSuggestions();
   });
 
@@ -190,7 +204,7 @@ function bindEvents() {
   els.editForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!editingId) return;
-    const desc = correctExpenseInput(els.editDesc.value.trim());
+    const desc = fixExpenseInput(els.editDesc.value.trim());
     updateExpense(
       editingId,
       desc,
@@ -237,23 +251,63 @@ function isInputComposing(input) {
   return input.dataset.composing === '1';
 }
 
+function syncInputPeak() {
+  const v = els.expenseInput.value;
+  if (v.length >= inputPeakValue.length) {
+    inputPeakValue = v;
+  }
+}
+
 function queueExpenseSubmit() {
   if (expenseComposing || isInputComposing(els.expenseInput)) {
     pendingSubmit = true;
     return;
   }
   pendingSubmit = false;
-  setTimeout(() => handleAdd(), 50);
+  readExpenseInputStable().then(handleAdd);
 }
 
-function handleAdd() {
-  const raw = els.expenseInput.value;
-  const corrected = correctExpenseInput(raw);
-  if (corrected !== raw) {
-    els.expenseInput.value = corrected;
-  }
+function readExpenseInputStable() {
+  return new Promise((resolve) => {
+    const snap = els.expenseInput.value;
+    setTimeout(() => {
+      const current = els.expenseInput.value;
+      const candidates = [snap, current, inputPeakValue, mergeComposition(snap, current)];
+      const best = candidates.sort((a, b) => scoreInput(b) - scoreInput(a))[0] || current;
+      inputPeakValue = '';
+      lastCompositionData = '';
+      resolve(best);
+    }, 180);
+  });
+}
 
-  const parsed = parseExpenseInput(corrected);
+function scoreInput(value) {
+  const fixed = fixExpenseInput(value || '');
+  return (fixed || '').replace(/\s/g, '').length;
+}
+
+/** Если в поле нет первой буквы, но composition её знает — склеить */
+function mergeComposition(snap, current) {
+  const base = current || snap;
+  const word = getTypingWord(base);
+  if (!word || word.length < 2) return fixExpenseInput(base);
+  const data = (lastCompositionData || '').toLowerCase().replace(/[^a-zа-яё0-9-]/gi, '');
+  if (data.length === word.length + 1 && data.slice(1) === word) {
+    return applyWordSuggestion(base, data);
+  }
+  return fixExpenseInput(base);
+}
+
+function handleAdd(rawInput) {
+  let raw = typeof rawInput === 'string' ? rawInput : els.expenseInput.value;
+  raw = fixExpenseInput(raw);
+  const suggestions = getWordSuggestions(getTypingWord(raw));
+  if (suggestions.length === 1) {
+    raw = applyWordSuggestion(raw, suggestions[0]);
+  }
+  raw = fixExpenseInput(raw);
+  const parsed = parseExpenseInput(raw);
+
   if (!parsed) {
     shakeInput();
     return;
