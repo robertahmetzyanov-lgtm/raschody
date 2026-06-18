@@ -11,7 +11,6 @@ export function loadSettings() {
     if (!raw) return defaultSettings();
     const merged = { ...defaultSettings(), ...JSON.parse(raw) };
     merged.darkTheme = false;
-    merged.isPro = true;
     return merged;
   } catch {
     return defaultSettings();
@@ -25,8 +24,10 @@ export function saveSettings(settings) {
 function defaultSettings() {
   return {
     darkTheme: false,
-    isPro: true,
+    isPro: false,
     monthlyBudget: null,
+    freeSavingsCategoryId: 'coffee',
+    freeDebtCategoryId: 'debts',
   };
 }
 

@@ -43,12 +43,28 @@ import {
   formatMonthYear,
   dayOfMonth,
 } from './format.js';
+import {
+  applyFreeTierSplit,
+  canAddCustomDebtCategory,
+  canAddCustomSavingsCategory,
+  getDebtPickerOptions,
+  getSavingsPickerOptions,
+  DEFAULT_FREE_DEBT_ID,
+  DEFAULT_FREE_SAVINGS_ID,
+} from './tierLimits.js';
+import {
+  markApkContext,
+  syncNativePro,
+  requestProPurchase,
+  isRuStoreApk,
+} from './rustoreBridge.js';
 
 let currentPeriod = 'today';
 let editingId = null;
 let settings = loadSettings();
 let expenseComposing = false;
 let iconManualOverride = false;
+let freeIconManualOverride = false;
 let pendingSubmit = false;
 let inputPeakValue = '';
 let lastCompositionData = '';
@@ -81,6 +97,19 @@ const els = {
   budgetLabel: document.getElementById('budget-label'),
   budgetHint: document.getElementById('budget-hint'),
   btnExport: document.getElementById('btn-export'),
+  freeBlocksSection: document.getElementById('free-blocks-section'),
+  freeSavingsPick: document.getElementById('free-savings-pick'),
+  freeDebtPick: document.getElementById('free-debt-pick'),
+  freeCatSection: document.getElementById('free-cat-section'),
+  freeNewCatName: document.getElementById('free-new-cat-name'),
+  freeNewCatIcon: document.getElementById('free-new-cat-icon'),
+  freeSelectedCatIcon: document.getElementById('free-selected-cat-icon'),
+  freeIconCycleBtn: document.getElementById('free-icon-cycle-btn'),
+  freeNewCatKeywords: document.getElementById('free-new-cat-keywords'),
+  freeNewCatSavings: document.getElementById('free-new-cat-savings'),
+  freeNewCatDebt: document.getElementById('free-new-cat-debt'),
+  btnAddFreeCategory: document.getElementById('btn-add-free-category'),
+  freeCustomCatList: document.getElementById('free-custom-cat-list'),
   submitBtn: document.getElementById('submit-btn'),
   newCatName: document.getElementById('new-cat-name'),
   newCatIcon: document.getElementById('new-cat-icon'),
@@ -94,16 +123,22 @@ const els = {
   customCatForm: document.getElementById('custom-cat-form'),
   customCatHint: document.getElementById('custom-cat-hint'),
   customCatList: document.getElementById('custom-cat-list'),
+  proBuySection: document.getElementById('pro-buy-section'),
+  proStatus: document.getElementById('pro-status'),
+  btnBuyPro: document.getElementById('btn-buy-pro'),
 };
 
 init();
 
 async function init() {
+  markApkContext();
+  syncNativePro(settings, saveSettings);
   const reimport = new URLSearchParams(location.search).has('reimport');
   await importExpensesFromSeed(reimport);
   refreshWordDictionary();
   populateCategorySelect();
   applyTheme();
+  updateProFieldsVisibility();
   bindEvents();
   render();
   registerServiceWorker();
@@ -176,10 +211,30 @@ function bindEvents() {
 
   els.btnSettings.addEventListener('click', () => {
     els.monthlyBudget.value = settings.monthlyBudget ?? '';
-    renderCustomCategoryList();
-    iconManualOverride = false;
-    resetCategoryIcon();
+    updateProFieldsVisibility();
+    populateFreeBlockPickers();
+    if (settings.isPro) {
+      renderCustomCategoryList();
+      iconManualOverride = false;
+      resetCategoryIcon();
+    } else {
+      freeIconManualOverride = false;
+      resetFreeCategoryIcon();
+      renderFreeCustomCategoryList();
+    }
     els.settingsDialog.showModal();
+  });
+
+  els.freeSavingsPick.addEventListener('change', () => {
+    settings.freeSavingsCategoryId = els.freeSavingsPick.value || DEFAULT_FREE_SAVINGS_ID;
+    saveSettings(settings);
+    render();
+  });
+
+  els.freeDebtPick.addEventListener('change', () => {
+    settings.freeDebtCategoryId = els.freeDebtPick.value || DEFAULT_FREE_DEBT_ID;
+    saveSettings(settings);
+    render();
   });
 
   els.monthlyBudget.addEventListener('change', () => {
@@ -190,6 +245,7 @@ function bindEvents() {
   });
 
   els.btnExport.addEventListener('click', async () => {
+    if (!settings.isPro) return;
     const label = els.btnExport.textContent;
     els.btnExport.disabled = true;
     els.btnExport.textContent = 'Формирование…';
@@ -226,7 +282,7 @@ function bindEvents() {
 
   els.editDesc.addEventListener('input', () => {
     if (!editingId) return;
-    els.editCategory.value = detectCategory(els.editDesc.value.trim(), true);
+    els.editCategory.value = detectCategory(els.editDesc.value.trim(), settings.isPro);
   });
 
   bindImeSafeInput(els.editDesc);
@@ -234,8 +290,15 @@ function bindEvents() {
   els.newCatName.addEventListener('input', updateSuggestedIcon);
   els.newCatKeywords.addEventListener('input', updateSuggestedIcon);
   els.iconCycleBtn.addEventListener('click', cycleCategoryIcon);
-
+  els.freeNewCatName.addEventListener('input', updateFreeSuggestedIcon);
+  els.freeNewCatKeywords.addEventListener('input', updateFreeSuggestedIcon);
+  els.freeIconCycleBtn.addEventListener('click', cycleFreeCategoryIcon);
   els.btnAddCategory.addEventListener('click', handleAddCategory);
+  els.btnAddFreeCategory.addEventListener('click', handleAddFreeCategory);
+
+  els.btnBuyPro.addEventListener('click', () => {
+    requestProPurchase();
+  });
 }
 
 function bindImeSafeInput(input) {
@@ -364,20 +427,16 @@ function shakeInput() {
 }
 
 function render() {
+  const isPro = settings.isPro;
   const expenses = getExpensesForPeriod(currentPeriod);
   const total = sumAmount(expenses);
-  const groups = groupByCategory(expenses, true);
-  const split = splitExpenseGroups(groups);
-  const { savings, regular, savingsTotal } = {
-    savings: split.savings,
-    regular: split.regular,
-    savingsTotal: split.savings.reduce((s, g) => s + g.total, 0),
-  };
+  const groups = groupByCategory(expenses, isPro);
+  const split = applyFreeTierSplit(splitExpenseGroups(groups), settings, isPro);
 
-  renderSummary(total, expenses.length, savingsTotal, split.debtsTotal);
+  renderSummary(total, expenses.length, split.savingsTotal, split.debtsTotal);
   renderDebtsPanel(split.debts, split.debtsTotal, total);
-  renderSavingsPanel(savings, savingsTotal, total);
-  renderCategoryBreakdown(regular);
+  renderSavingsPanel(split.savings, split.savingsTotal, total);
+  renderCategoryBreakdown(split.regular);
   renderList(expenses);
   checkBudgetWarning();
 }
@@ -497,7 +556,7 @@ function createExpenseList(items) {
 
 function populateCategorySelect() {
   let html = '';
-  const all = getCategoriesForTier(true);
+  const all = getCategoriesForTier(settings.isPro);
   const builtin = all.filter((c) => !c.custom);
   const custom = all.filter((c) => c.custom);
 
@@ -514,15 +573,14 @@ function populateCategorySelect() {
   els.editCategory.innerHTML = html;
 }
 
-function renderCustomCategoryList() {
-  const cats = loadCustomCategories();
-  els.customCatList.innerHTML = '';
+function renderCategoryList(listEl, cats, emptyText = 'Пока нет своих категорий') {
+  listEl.innerHTML = '';
 
   if (!cats.length) {
     const empty = document.createElement('li');
     empty.className = 'custom-cat-empty';
-    empty.textContent = 'Пока нет своих категорий';
-    els.customCatList.appendChild(empty);
+    empty.textContent = emptyText;
+    listEl.appendChild(empty);
     return;
   }
 
@@ -542,11 +600,21 @@ function renderCustomCategoryList() {
       <button type="button" class="btn-icon-danger" data-id="${cat.id}" aria-label="Удалить">✕</button>
     `;
     li.querySelector('button').addEventListener('click', () => handleDeleteCategory(cat.id, cat.name));
-    els.customCatList.appendChild(li);
+    listEl.appendChild(li);
   }
 }
 
+function renderCustomCategoryList() {
+  renderCategoryList(els.customCatList, loadCustomCategories());
+}
+
+function renderFreeCustomCategoryList() {
+  renderCategoryList(els.freeCustomCatList, loadCustomCategories(), 'Нет своих категорий');
+}
+
 function handleAddCategory() {
+  if (!settings.isPro) return;
+
   const name = els.newCatName.value.trim();
   if (!name) {
     els.newCatName.focus();
@@ -578,13 +646,78 @@ function handleAddCategory() {
   render();
 }
 
+function handleAddFreeCategory() {
+  if (settings.isPro) return;
+
+  const name = els.freeNewCatName.value.trim();
+  if (!name) {
+    els.freeNewCatName.focus();
+    return;
+  }
+
+  if (els.freeNewCatSavings.checked && els.freeNewCatDebt.checked) {
+    alert('Категория не может быть одновременно привычкой и долгом.');
+    return;
+  }
+  if (!els.freeNewCatSavings.checked && !els.freeNewCatDebt.checked) {
+    alert('Отметьте «Привычка» или «Долг».');
+    return;
+  }
+  if (els.freeNewCatSavings.checked && !canAddCustomSavingsCategory(false)) {
+    alert('В бесплатной версии уже есть категория в «Можно сэкономить». Pro — без ограничений.');
+    return;
+  }
+  if (els.freeNewCatDebt.checked && !canAddCustomDebtCategory(false)) {
+    alert('В бесплатной версии уже есть категория в «Долги». Pro — без ограничений.');
+    return;
+  }
+
+  const cat = addCustomCategory({
+    name,
+    icon: els.freeNewCatIcon.value.trim() || DEFAULT_CATEGORY_ICON,
+    keywords: els.freeNewCatKeywords.value,
+    savings: els.freeNewCatSavings.checked,
+    debt: els.freeNewCatDebt.checked,
+  });
+
+  if (cat?.savings) {
+    settings.freeSavingsCategoryId = cat.id;
+    saveSettings(settings);
+  }
+  if (cat?.debt) {
+    settings.freeDebtCategoryId = cat.id;
+    saveSettings(settings);
+  }
+
+  els.freeNewCatName.value = '';
+  resetFreeCategoryIcon();
+  els.freeNewCatKeywords.value = '';
+  els.freeNewCatSavings.checked = false;
+  els.freeNewCatDebt.checked = false;
+
+  populateCategorySelect();
+  populateFreeBlockPickers();
+  renderFreeCustomCategoryList();
+  refreshWordDictionary();
+  render();
+}
+
 function handleDeleteCategory(id, name) {
   if (!confirm(`Удалить категорию «${name}»? Траты перейдут в «Прочее».`)) return;
+  if (settings.freeSavingsCategoryId === id) {
+    settings.freeSavingsCategoryId = DEFAULT_FREE_SAVINGS_ID;
+  }
+  if (settings.freeDebtCategoryId === id) {
+    settings.freeDebtCategoryId = DEFAULT_FREE_DEBT_ID;
+  }
+  saveSettings(settings);
   deleteCustomCategory(id);
   deleteCategoryRulesForCategory(id);
   reassignCategory(id, 'other');
   populateCategorySelect();
+  populateFreeBlockPickers();
   renderCustomCategoryList();
+  renderFreeCustomCategoryList();
   render();
 }
 
@@ -595,7 +728,7 @@ function openEdit(expense) {
   els.editCategory.value = resolveCategoryId(
     expense.categoryId,
     expense.description,
-    true,
+    settings.isPro,
   );
   els.editDialog.showModal();
 }
@@ -606,7 +739,7 @@ function checkBudgetWarning() {
   els.periodTotal.classList.remove('budget-ok', 'budget-warn', 'budget-over', 'over-budget');
   els.summarySub.classList.remove('summary-sub--budget-warn', 'summary-sub--budget-over');
 
-  if (!settings.monthlyBudget) return;
+  if (!settings.isPro || !settings.monthlyBudget) return;
 
   const budget = settings.monthlyBudget;
   const monthTotal = sumAmount(getExpensesForPeriod('month'));
@@ -635,6 +768,50 @@ function prependSummarySub(line) {
   els.summarySub.textContent = existing ? `${line} · ${existing}` : line;
 }
 
+function updateProFieldsVisibility() {
+  const pro = settings.isPro;
+  els.budgetLabel.hidden = !pro;
+  els.budgetHint.hidden = !pro;
+  els.btnExport.hidden = !pro;
+  els.customCatSection.hidden = !pro;
+  els.freeBlocksSection.hidden = pro;
+  els.freeCatSection.hidden = pro;
+  renderProBuySection();
+}
+
+function renderProBuySection() {
+  const inApk = isRuStoreApk();
+  els.proBuySection.hidden = !inApk;
+  if (!inApk) return;
+
+  if (settings.isPro) {
+    els.proStatus.textContent = 'Pro активен';
+    els.btnBuyPro.hidden = true;
+  } else {
+    els.proStatus.textContent = 'Бесплатная версия';
+    els.btnBuyPro.hidden = false;
+  }
+}
+
+function populateFreeBlockPickers() {
+  const savingsVal = settings.freeSavingsCategoryId || DEFAULT_FREE_SAVINGS_ID;
+  const debtVal = settings.freeDebtCategoryId || DEFAULT_FREE_DEBT_ID;
+
+  els.freeSavingsPick.innerHTML = getSavingsPickerOptions()
+    .map((o) => `<option value="${o.id}">${escapeHtml(o.label)}</option>`)
+    .join('');
+  els.freeDebtPick.innerHTML = getDebtPickerOptions()
+    .map((o) => `<option value="${o.id}">${escapeHtml(o.label)}</option>`)
+    .join('');
+
+  if ([...els.freeSavingsPick.options].some((o) => o.value === savingsVal)) {
+    els.freeSavingsPick.value = savingsVal;
+  }
+  if ([...els.freeDebtPick.options].some((o) => o.value === debtVal)) {
+    els.freeDebtPick.value = debtVal;
+  }
+}
+
 function applyTheme() {
   document.documentElement.dataset.theme = 'light';
 }
@@ -657,6 +834,26 @@ function cycleCategoryIcon() {
 function resetCategoryIcon() {
   iconManualOverride = false;
   updateSuggestedIcon();
+}
+
+function setFreeCategoryIcon(icon) {
+  els.freeNewCatIcon.value = icon;
+  els.freeSelectedCatIcon.textContent = icon;
+}
+
+function updateFreeSuggestedIcon() {
+  if (freeIconManualOverride) return;
+  setFreeCategoryIcon(suggestCategoryIcon(els.freeNewCatName.value, els.freeNewCatKeywords.value));
+}
+
+function cycleFreeCategoryIcon() {
+  freeIconManualOverride = true;
+  setFreeCategoryIcon(getNextCategoryIcon(els.freeNewCatIcon.value));
+}
+
+function resetFreeCategoryIcon() {
+  freeIconManualOverride = false;
+  updateFreeSuggestedIcon();
 }
 
 function plural(n, one, few, many) {

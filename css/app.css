@@ -822,8 +822,17 @@ html, body {
 #budget-label[hidden],
 #budget-hint[hidden],
 #btn-export[hidden],
-#custom-cat-section[hidden] {
+#custom-cat-section[hidden],
+#free-blocks-section[hidden],
+#free-cat-section[hidden],
+#btn-buy-pro[hidden] {
   display: none !important;
+}
+
+.pro-status {
+  margin: 0.5rem 0 0.75rem;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .settings-section-title {

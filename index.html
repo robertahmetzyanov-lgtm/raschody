@@ -105,15 +105,59 @@
   <dialog id="settings-dialog" class="dialog">
     <form method="dialog" class="dialog-form">
       <h2>Настройки</h2>
-      <label id="budget-label">
+      <label id="budget-label" hidden>
         Бюджет на месяц, ₽
         <input type="number" id="monthly-budget" min="0" step="1000" placeholder="40000">
       </label>
-      <p class="hint" id="budget-hint">Предупреждение при превышении бюджета</p>
+      <p class="hint" id="budget-hint" hidden>Pro: предупреждение при превышении бюджета</p>
 
-      <div class="settings-section" id="custom-cat-section">
+      <div class="settings-section" id="free-blocks-section">
+        <h3 class="settings-section-title">Блоки на главном экране</h3>
+        <p class="hint" id="free-blocks-hint">Бесплатно: по одной категории в каждом блоке. Pro — сколько угодно.</p>
+        <label id="free-savings-pick-label">
+          Можно сэкономить
+          <select id="free-savings-pick"></select>
+        </label>
+        <label id="free-debt-pick-label">
+          Долги
+          <select id="free-debt-pick"></select>
+        </label>
+      </div>
+
+      <div class="settings-section" id="free-cat-section">
+        <h3 class="settings-section-title">Своя категория (Free)</h3>
+        <p class="hint" id="free-cat-hint">Не больше одной привычки и одного долга. Остальное — в Pro.</p>
+        <div class="custom-cat-form" id="free-cat-form">
+          <label class="custom-cat-name-row">
+            <span class="field-label">Название</span>
+            <div class="name-with-icon">
+              <button type="button" class="icon-cycle-btn" id="free-icon-cycle-btn" aria-label="Сменить иконку">
+                <span id="free-selected-cat-icon">📌</span>
+              </button>
+              <input type="text" id="free-new-cat-name" placeholder="Алкоголь" maxlength="30">
+            </div>
+          </label>
+          <input type="hidden" id="free-new-cat-icon" value="📌">
+          <label>
+            Слова для автоопределения
+            <input type="text" id="free-new-cat-keywords" placeholder="пиво, вино">
+          </label>
+          <label class="toggle-row">
+            <span>Привычка (можно сэкономить)</span>
+            <input type="checkbox" id="free-new-cat-savings">
+          </label>
+          <label class="toggle-row">
+            <span>Долг</span>
+            <input type="checkbox" id="free-new-cat-debt">
+          </label>
+          <button type="button" class="btn-secondary btn-block" id="btn-add-free-category">+ Добавить</button>
+        </div>
+        <ul class="custom-cat-list" id="free-custom-cat-list"></ul>
+      </div>
+
+      <div class="settings-section pro-only" id="custom-cat-section" hidden>
         <h3 class="settings-section-title">Мои категории</h3>
-        <p class="hint" id="custom-cat-hint">Свои категории появятся в списке при редактировании траты.</p>
+        <p class="hint" id="custom-cat-hint">Pro: свои категории без ограничений.</p>
         <div class="custom-cat-form" id="custom-cat-form">
           <label class="custom-cat-name-row">
             <span class="field-label">Название</span>
@@ -143,8 +187,15 @@
         <ul class="custom-cat-list" id="custom-cat-list"></ul>
       </div>
 
+      <div class="settings-section" id="pro-buy-section" hidden>
+        <h3 class="settings-section-title">Расходы Pro</h3>
+        <p class="hint" id="pro-buy-hint">PDF, бюджет, все категории в «Можно сэкономить» и «Долги», свои категории без ограничений.</p>
+        <p class="pro-status" id="pro-status"></p>
+        <button type="button" class="btn-primary btn-block" id="btn-buy-pro">Купить Pro</button>
+      </div>
+
       <div class="dialog-actions">
-        <button type="button" class="btn-secondary" id="btn-export">Экспорт PDF</button>
+        <button type="button" class="btn-secondary" id="btn-export" hidden>Экспорт PDF</button>
         <button type="submit" class="btn-primary">Готово</button>
       </div>
     </form>

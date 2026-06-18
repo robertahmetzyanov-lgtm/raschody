@@ -1,4 +1,4 @@
-const CACHE = 'raschody-v46';
+const CACHE = 'raschody-v49';
 const ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,8 @@ const ASSETS = [
   './js/format.js',
   './js/categories.js',
   './js/categoryIcons.js',
+  './js/rustoreBridge.js',
+  './js/tierLimits.js',
   './js/textFix.js',
   './js/wordSuggest.js',
   './js/categoryRules.js',
