@@ -1,0 +1,63 @@
+/** Иконки для пользовательских категорий */
+import { detectCategory, getCategory } from './categories.js';
+
+export const DEFAULT_CATEGORY_ICON = '📌';
+
+export const CATEGORY_ICON_OPTIONS = [
+  '📌', '⭐', '❤️', '🔥', '✅',
+  '👶', '🧒', '👨‍👩‍👧', '🎓', '📚', '✏️', '📝',
+  '🐕', '🐈', '🐾', '🐠', '🌿',
+  '🏋️', '🧘', '⚽', '🎾', '🏊', '🚴', '🏃',
+  '💼', '📊', '📈', '💳', '🏧', '💰', '🪙',
+  '📱', '💻', '🖥️', '⌚', '📷', '🎧',
+  '🏥', '🦷', '👓', '💊', '🩺',
+  '💇', '💅', '💄', '🧴', '🪥', '🧼',
+  '🍺', '🍷', '🥤', '🍰', '🧁', '🍕', '🍔', '🌮', '🍜', '🍱', '🥗', '🍼',
+  '🎁', '💐', '🌸', '🎄', '🧸',
+  '✈️', '🏖️', '🗺️', '🧳', '🏕️', '⛺', '🎿', '⛷️',
+  '🎮', '🎲', '🎬', '🎵', '🎸', '🎨', '🎭', '🎯',
+  '🏪', '🛎️', '🔧', '🔨', '🪛', '🧹', '🧽',
+  '🚲', '🛵', '⛽', '🅿️', '🚇', '🚌',
+  '🛍️', '☕', '🍽️', '🏠', '👕', '🚗', '🛒', '🏦', '📋',
+];
+
+const NAME_ICON_HINTS = [
+  { re: /дет|реб[её]н|малыш|садик|школ|учеб|пампер|игруш/i, icon: '👶' },
+  { re: /собак|п[её]с|кош|кот|питом|ветерин|корм/i, icon: '🐕' },
+  { re: /спорт|фитнес|зал|тренир|йог/i, icon: '🏋️' },
+  { re: /красот|стриж|маник|парикм|салон/i, icon: '💇' },
+  { re: /путеш|отпуск|отель|авиа|самол/i, icon: '✈️' },
+  { re: /подар|праздн|день рожд/i, icon: '🎁' },
+  { re: /техник|телефон|комп|ноут|планшет/i, icon: '📱' },
+  { re: /ремонт|инструмент|строй/i, icon: '🔧' },
+  { re: /алког|пив|вино|бар/i, icon: '🍺' },
+  { re: /бензин|заправ|азс|топлив|авто|машин|парков/i, icon: '⛽' },
+  { re: /кредит|ипотек|долг|займ/i, icon: '🏦' },
+  { re: /аптек|лекар|врач|стомат|здоров/i, icon: '💊' },
+  { re: /кофе|капуч|латte|латте/i, icon: '☕' },
+  { re: /ресторан|обед|ужин|кафе|еда/i, icon: '🍽️' },
+  { re: /одеж|обув|куртк|джинс/i, icon: '👕' },
+  { re: /продукт|магазин|супермарк/i, icon: '🛍️' },
+];
+
+/** Подобрать иконку по названию и ключевым словам */
+export function suggestCategoryIcon(name, keywordsRaw = '') {
+  const text = `${name || ''} ${keywordsRaw || ''}`.trim();
+  if (!text) return DEFAULT_CATEGORY_ICON;
+
+  for (const hint of NAME_ICON_HINTS) {
+    if (hint.re.test(text)) return hint.icon;
+  }
+
+  const catId = detectCategory(text, true);
+  const cat = getCategory(catId);
+  if (cat && cat.id !== 'other') return cat.icon;
+
+  return DEFAULT_CATEGORY_ICON;
+}
+
+export function getNextCategoryIcon(current) {
+  const idx = CATEGORY_ICON_OPTIONS.indexOf(current);
+  const next = idx >= 0 ? (idx + 1) % CATEGORY_ICON_OPTIONS.length : 0;
+  return CATEGORY_ICON_OPTIONS[next];
+}

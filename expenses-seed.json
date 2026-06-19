@@ -1,0 +1,2200 @@
+[
+  {
+    "id": "b1a909e0-5ab0-4206-a482-ca1a5bdaefe9",
+    "description": "продукты",
+    "amount": 2050,
+    "createdAt": "2026-05-17T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "a1967079-f682-4424-9b4e-69d3fc98b2a9",
+    "description": "дача",
+    "amount": 260,
+    "createdAt": "2026-05-17T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "adc4971f-adc4-401a-aefb-a2c3ebf8300b",
+    "description": "продукты",
+    "amount": 331,
+    "createdAt": "2026-05-16T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "a4a07092-4fb2-495b-9ea5-8a6d65de6a40",
+    "description": "дача",
+    "amount": 3605,
+    "createdAt": "2026-05-16T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "257e6d12-ba2b-498c-8106-d981a0c3a7cf",
+    "description": "продукты",
+    "amount": 1145,
+    "createdAt": "2026-05-15T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "a8d3969d-0439-4e73-b8be-a7c9cc689239",
+    "description": "квартира",
+    "amount": 19150,
+    "createdAt": "2026-05-15T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "ba38d2fe-315b-4838-a604-972871077a9e",
+    "description": "бензин",
+    "amount": 2650,
+    "createdAt": "2026-05-15T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "e65161d1-fa4a-47a7-ae63-ca73f04dc926",
+    "description": "дача",
+    "amount": 3800,
+    "createdAt": "2026-05-15T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "9ed15890-5a9f-4a09-81fc-cd39c7d395de",
+    "description": "дача",
+    "amount": 1825,
+    "createdAt": "2026-05-14T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "ccc24aa4-163d-4ee1-a368-6ba9d8305673",
+    "description": "продукты",
+    "amount": 845,
+    "createdAt": "2026-05-13T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "7d3e8fb3-196f-40f6-aa8c-826e275aa5c5",
+    "description": "продукты",
+    "amount": 380,
+    "createdAt": "2026-05-12T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "8bac52c1-9d5e-444e-8c20-38ffd5e67d06",
+    "description": "продукты",
+    "amount": 240,
+    "createdAt": "2026-05-11T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "561c89da-da30-4237-852f-57ae7f656769",
+    "description": "бензин",
+    "amount": 2000,
+    "createdAt": "2026-05-11T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "615c3dc6-d317-43a0-abe9-594b700e2004",
+    "description": "обслуживание",
+    "amount": 2000,
+    "createdAt": "2026-05-11T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "205600f4-fde3-4283-8f01-06995ccc1b88",
+    "description": "игры",
+    "amount": 2000,
+    "createdAt": "2026-05-11T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "1b431c5a-ac4b-4261-9584-53fcbd990b4b",
+    "description": "продукты",
+    "amount": 2010,
+    "createdAt": "2026-05-10T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "1e91f032-600c-4fc1-8b37-45497b517b3e",
+    "description": "дача",
+    "amount": 43020,
+    "createdAt": "2026-05-10T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "64cad32b-d8ad-4486-8b82-62e069a23ea8",
+    "description": "продукты",
+    "amount": 235,
+    "createdAt": "2026-05-09T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "c8b3c667-15e9-4999-98e6-39fc1d3acc4b",
+    "description": "дача",
+    "amount": 3685,
+    "createdAt": "2026-05-09T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "f244a56e-c45a-46ba-b779-86a5959c0c78",
+    "description": "продукты",
+    "amount": 2060,
+    "createdAt": "2026-05-08T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "94b19020-0f5f-4140-b947-a75c4c6d4fbe",
+    "description": "штраф",
+    "amount": 560,
+    "createdAt": "2026-05-08T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "91848da7-dd28-4f77-a20c-6f141b18802f",
+    "description": "продукты",
+    "amount": 1185,
+    "createdAt": "2026-05-07T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "1ff6714b-16f4-4fae-b6d1-5426d597dda8",
+    "description": "авто",
+    "amount": 9150,
+    "createdAt": "2026-05-07T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "c7eab9d2-29c5-42c5-a611-7013419e99c0",
+    "description": "подарки",
+    "amount": 2200,
+    "createdAt": "2026-05-07T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "9bf81d9a-310c-4ada-a1b8-a3acf2cbe203",
+    "description": "продукты",
+    "amount": 240,
+    "createdAt": "2026-05-06T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "6c2d2764-1b9f-4eeb-a192-f56e478f554f",
+    "description": "бензин",
+    "amount": 2680,
+    "createdAt": "2026-05-06T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "d77b6601-bca4-4217-b775-3ca5fd65d0e0",
+    "description": "штраф",
+    "amount": 2240,
+    "createdAt": "2026-05-06T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "c94af01d-ce8e-4440-8e11-07be3c062cdc",
+    "description": "секции",
+    "amount": 5000,
+    "createdAt": "2026-05-06T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "78fdb29a-75d6-4c5a-8510-9224fe60e6d5",
+    "description": "секции",
+    "amount": 3300,
+    "createdAt": "2026-05-05T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "569e62f5-4c66-479b-8433-b794ca876f9b",
+    "description": "бассейн",
+    "amount": 3600,
+    "createdAt": "2026-05-05T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "898bb981-9775-40af-8108-a892b491c79a",
+    "description": "стрижка",
+    "amount": 450,
+    "createdAt": "2026-05-05T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "915ded57-6621-44eb-bc28-25503a19a961",
+    "description": "кварплата",
+    "amount": 8280,
+    "createdAt": "2026-05-04T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "3eef985b-564f-4c07-9524-b9ff38f33918",
+    "description": "бензин",
+    "amount": 1000,
+    "createdAt": "2026-05-04T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "bf8bcfcc-701b-4c53-9b11-ff8ca38dc00c",
+    "description": "продукты",
+    "amount": 285,
+    "createdAt": "2026-05-03T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "8a928055-ad7b-41da-88e7-ad31c8bb1222",
+    "description": "инет",
+    "amount": 1115,
+    "createdAt": "2026-05-03T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "19fa6feb-a547-478a-8f2e-e77b81b98828",
+    "description": "продукты",
+    "amount": 2240,
+    "createdAt": "2026-05-02T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "83b2575b-1dfd-4439-a215-0b27dc121149",
+    "description": "стрижка",
+    "amount": 500,
+    "createdAt": "2026-05-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "531946c6-c9c6-4cb5-8590-2e8ccc901ee1",
+    "description": "инет",
+    "amount": 650,
+    "createdAt": "2026-05-01T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "4c0d137f-ad2d-43fa-8d97-7ea81e1289b2",
+    "description": "секции",
+    "amount": 6000,
+    "createdAt": "2026-05-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "3f96d54a-19d2-47d7-9828-b7a54dfa3dae",
+    "description": "сотовый",
+    "amount": 1100,
+    "createdAt": "2026-05-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "5d861c77-4280-49fb-927e-46f38bf43c25",
+    "description": "подарки",
+    "amount": 30000,
+    "createdAt": "2026-04-29T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "e2291133-19f0-4310-8a08-e47633e219bf",
+    "description": "продукты",
+    "amount": 1245,
+    "createdAt": "2026-04-28T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "c30210d1-1448-44d4-addb-8da429cfe3f5",
+    "description": "авто",
+    "amount": 2650,
+    "createdAt": "2026-04-28T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "8cba66b4-ff7a-4bae-b92a-5be9392f0bba",
+    "description": "подарки",
+    "amount": 100,
+    "createdAt": "2026-04-28T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "f912fb94-6ce7-45bb-962b-e68312f08ba3",
+    "description": "продукты",
+    "amount": 2285,
+    "createdAt": "2026-04-27T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "7e59a836-eabd-4fce-b684-29bf467155c2",
+    "description": "штраф",
+    "amount": 560,
+    "createdAt": "2026-04-27T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "d20452e6-b742-4bae-ad3b-76f442a8a5cf",
+    "description": "продукты",
+    "amount": 760,
+    "createdAt": "2026-04-26T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "0887d144-927e-4435-976a-e64f14729240",
+    "description": "продукты",
+    "amount": 1355,
+    "createdAt": "2026-04-25T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "02947d6e-7dd8-43da-ab5e-31a3536c4abd",
+    "description": "фасфуд",
+    "amount": 1000,
+    "createdAt": "2026-04-25T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "26fa4824-cf9e-4e96-a2b4-56dcd0d081a0",
+    "description": "одежда",
+    "amount": 4600,
+    "createdAt": "2026-04-25T12:00:00Z",
+    "categoryId": "clothing"
+  },
+  {
+    "id": "ac7c7c7f-ac83-4515-a3b4-f7b053583a4e",
+    "description": "продукты",
+    "amount": 165,
+    "createdAt": "2026-04-24T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "26f07c32-206e-4a16-93c1-2dad6994c97f",
+    "description": "медслуги",
+    "amount": 14710,
+    "createdAt": "2026-04-24T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "53fdbbc1-4a37-45d4-a030-69583cc04140",
+    "description": "продукты",
+    "amount": 1810,
+    "createdAt": "2026-04-23T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "7755d207-6e99-43c7-b2db-d294fb417b84",
+    "description": "техника и мебель",
+    "amount": 2190,
+    "createdAt": "2026-04-23T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "b4a0faab-b411-4181-9884-29c19463442c",
+    "description": "продукты",
+    "amount": 1040,
+    "createdAt": "2026-04-22T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "25dee0a6-27e8-4cdf-817c-b70d699bd21e",
+    "description": "продукты",
+    "amount": 6,
+    "createdAt": "2026-04-21T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "04d66695-44f7-453b-acd7-f48e75c4be52",
+    "description": "авто",
+    "amount": 2650,
+    "createdAt": "2026-04-21T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "2adc5ade-a189-45aa-8bed-6670a1d2d6db",
+    "description": "продукты",
+    "amount": 265,
+    "createdAt": "2026-04-20T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "436f73fe-456b-4707-9dd1-a0a1299c31e2",
+    "description": "продукты",
+    "amount": 1010,
+    "createdAt": "2026-04-19T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "f914ba73-5163-47c9-a857-99d2a1d3824c",
+    "description": "техника и мебель",
+    "amount": 1200,
+    "createdAt": "2026-04-19T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "cb1d9368-f335-4d7f-a172-89f879a82314",
+    "description": "продукты",
+    "amount": 2175,
+    "createdAt": "2026-04-18T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "d39f2be8-1566-4c1e-9656-fb185bdcabc6",
+    "description": "фасфуд",
+    "amount": 1000,
+    "createdAt": "2026-04-18T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "2dec6ac6-1d32-409b-a51b-6f5fc1012107",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-04-17T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "a08b04ee-7299-4d19-80f9-21f39e284a6a",
+    "description": "продукты",
+    "amount": 1980,
+    "createdAt": "2026-04-16T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "5c9d2ee1-4cc4-4c3f-9399-4c1392c57ab9",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-04-16T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "0cb25f47-7cbf-4399-9efa-aa732be78982",
+    "description": "авто",
+    "amount": 19150,
+    "createdAt": "2026-04-15T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "c6782d87-ed9a-45ce-b898-e4f9e5c6f31f",
+    "description": "авто",
+    "amount": 2640,
+    "createdAt": "2026-04-15T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "70918727-42e8-4975-8738-c8749e9f8358",
+    "description": "продукты",
+    "amount": 340,
+    "createdAt": "2026-04-14T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "95f0f703-4938-4799-b67c-afc9ea94c829",
+    "description": "продукты",
+    "amount": 650,
+    "createdAt": "2026-04-13T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "e65242aa-7907-40de-bdb3-41c3d97a4d41",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-04-13T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "65171bd5-b310-427c-9609-560392d9c450",
+    "description": "продукты",
+    "amount": 2915,
+    "createdAt": "2026-04-12T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "4c075ef5-bd8e-4798-96dc-315539770f8e",
+    "description": "продукты",
+    "amount": 280,
+    "createdAt": "2026-04-11T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b65fa807-a4f6-4b67-bf6e-af0dbe3fb6e2",
+    "description": "обслуживание",
+    "amount": 20650,
+    "createdAt": "2026-04-11T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "b2217584-f24e-42c6-9981-b114085a2878",
+    "description": "фасфуд",
+    "amount": 1015,
+    "createdAt": "2026-04-11T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "2dcf001f-5177-4d61-92b1-2f800318003b",
+    "description": "продукты",
+    "amount": 990,
+    "createdAt": "2026-04-10T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "238c33f8-aaee-44ed-8be3-b4412dab938f",
+    "description": "аптека",
+    "amount": 450,
+    "createdAt": "2026-04-10T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "337353cf-3fc6-4fd3-bf3c-0a5f57fb23df",
+    "description": "фасфуд",
+    "amount": 780,
+    "createdAt": "2026-04-10T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "1794b03f-773b-46f3-983d-acdd757b6b3f",
+    "description": "авто",
+    "amount": 9150,
+    "createdAt": "2026-04-09T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "ce868ed1-737c-4571-be86-abc47b8b4b73",
+    "description": "бензин",
+    "amount": 2660,
+    "createdAt": "2026-04-09T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "5cfd41c6-d204-490a-86a2-e8767fc1b5f9",
+    "description": "обслуживание",
+    "amount": 3960,
+    "createdAt": "2026-04-09T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "9dcba25e-8708-459a-82cd-0e7d71ebde08",
+    "description": "продукты",
+    "amount": 345,
+    "createdAt": "2026-04-08T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "36151d62-32c8-4901-9423-e8283dfad48f",
+    "description": "расходники",
+    "amount": 1950,
+    "createdAt": "2026-04-08T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "95d18acc-ac28-4710-b2f3-092eaa9502d3",
+    "description": "продукты",
+    "amount": 2660,
+    "createdAt": "2026-04-07T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "51c509b7-b64d-421d-b3c2-4cc6d7e470f6",
+    "description": "кварплата",
+    "amount": 8460,
+    "createdAt": "2026-04-06T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "32733b12-c685-461e-ac4a-3eb13c6c3b86",
+    "description": "секции",
+    "amount": 5000,
+    "createdAt": "2026-04-06T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "9de6132f-b0ee-4031-bac3-685f00193cf5",
+    "description": "подарки",
+    "amount": 340,
+    "createdAt": "2026-04-06T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "e633b866-4cf4-45eb-8c94-13d4a4d6cd73",
+    "description": "продукты",
+    "amount": 1450,
+    "createdAt": "2026-04-05T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "26583087-e26f-4d6d-a706-4e60d4ed8246",
+    "description": "продукты",
+    "amount": 1490,
+    "createdAt": "2026-04-04T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "368f5085-3e65-4a68-9426-4a5808910da9",
+    "description": "дача",
+    "amount": 695,
+    "createdAt": "2026-04-04T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "2d72b621-6599-4703-9e09-a8b3a70b50fc",
+    "description": "продукты",
+    "amount": 1140,
+    "createdAt": "2026-04-03T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "9e102e59-753c-49bb-8db5-4377987668ba",
+    "description": "бензин",
+    "amount": 2630,
+    "createdAt": "2026-04-03T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "d50c7da0-6b88-433f-94f2-4f3ee38de77e",
+    "description": "секции",
+    "amount": 3300,
+    "createdAt": "2026-04-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "85f3e164-08f4-4bbb-8afd-82b886ee016a",
+    "description": "обучение",
+    "amount": 1900,
+    "createdAt": "2026-04-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "72af2823-82e8-47c5-8283-a56db0ec170c",
+    "description": "бассейн",
+    "amount": 3600,
+    "createdAt": "2026-04-02T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "7e75e16a-c18c-4b25-9149-8fe7f56f544d",
+    "description": "еда",
+    "amount": 1250,
+    "createdAt": "2026-04-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "fd9f025e-c618-4f57-b4fd-47a40b0992d5",
+    "description": "продукты",
+    "amount": 2955,
+    "createdAt": "2026-04-01T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "40e25ff4-860e-451e-921f-1d8b32cb2dbf",
+    "description": "инет",
+    "amount": 600,
+    "createdAt": "2026-04-01T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "4b1a4894-4493-4f07-bf31-ae815c1febe7",
+    "description": "карманны",
+    "amount": 3000,
+    "createdAt": "2026-04-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "fe25dffa-b691-4a9d-ab3b-1c25785a0732",
+    "description": "секции",
+    "amount": 6000,
+    "createdAt": "2026-04-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "d7a5df7e-cad9-4061-9e62-59efb37f3d39",
+    "description": "сотовый",
+    "amount": 1000,
+    "createdAt": "2026-04-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "1aa25c97-96fa-43dd-b62b-1595ebff1d4b",
+    "description": "еда вне дома",
+    "amount": 105,
+    "createdAt": "2026-04-01T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "688e6d5d-ecfb-4c8a-9c15-f8cd97b60400",
+    "description": "продукты",
+    "amount": 540,
+    "createdAt": "2026-03-31T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "1f8aff6f-b13a-4d08-b522-bf3f4639f239",
+    "description": "еда вне дома",
+    "amount": 150,
+    "createdAt": "2026-03-31T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "b0e24a10-aa82-445b-945b-af1f7efcf4e8",
+    "description": "продукты",
+    "amount": 1790,
+    "createdAt": "2026-03-30T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "08ad3143-22a6-4b0b-9e6a-47d991774221",
+    "description": "еда вне дома",
+    "amount": 140,
+    "createdAt": "2026-03-30T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "ddcada74-ba27-420a-af95-eae0e9ec01da",
+    "description": "продукты",
+    "amount": 1410,
+    "createdAt": "2026-03-29T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "621ff216-dd42-48a5-9b0b-95aacf86c6fa",
+    "description": "игры",
+    "amount": 12140,
+    "createdAt": "2026-03-29T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "f7316291-df99-4a07-a488-b8e98304a032",
+    "description": "рестик",
+    "amount": 14435,
+    "createdAt": "2026-03-29T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "b8a05107-d0e2-4880-aa38-53cb1ac3c08b",
+    "description": "подарки",
+    "amount": 2975,
+    "createdAt": "2026-03-29T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "12135159-6e01-4449-9f7d-2ee97e81a262",
+    "description": "бензин",
+    "amount": 4305,
+    "createdAt": "2026-03-28T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "dd09c85f-665f-4e53-9cba-24a7ab7c80b4",
+    "description": "еда вне дома",
+    "amount": 230,
+    "createdAt": "2026-03-28T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "87a1b3db-209b-43a2-8ef5-f83fbdbe3ed8",
+    "description": "подарки",
+    "amount": 330,
+    "createdAt": "2026-03-28T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "c591ed35-2263-4e0c-a29b-e22db6137743",
+    "description": "продукты",
+    "amount": 655,
+    "createdAt": "2026-03-27T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b247c84c-1a75-4c44-bd14-fc5fa470249d",
+    "description": "еда вне дома",
+    "amount": 290,
+    "createdAt": "2026-03-27T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "1fd2f657-9e94-4bb3-867a-574d6b306546",
+    "description": "штраф",
+    "amount": 560,
+    "createdAt": "2026-03-26T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "fa4a4d4d-4c4e-46c2-8ec1-ba12b498bfd1",
+    "description": "еда вне дома",
+    "amount": 185,
+    "createdAt": "2026-03-26T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "29c613b3-b37f-473e-977c-2b823ace9742",
+    "description": "продукты",
+    "amount": 445,
+    "createdAt": "2026-03-25T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "28e7dc4f-049b-4243-a365-8c17304e54cc",
+    "description": "техника и мебель",
+    "amount": 535,
+    "createdAt": "2026-03-25T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "d4c33492-089d-49c1-8626-efb272019b29",
+    "description": "сотовый",
+    "amount": 1500,
+    "createdAt": "2026-03-24T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "40e06cb6-fa65-4a0d-a836-628f4745339f",
+    "description": "еда вне дома",
+    "amount": 225,
+    "createdAt": "2026-03-24T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "59add6dc-758c-4418-90a6-7ca8314aea64",
+    "description": "подарки",
+    "amount": 340,
+    "createdAt": "2026-03-24T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "903aefdd-a18d-4f6a-88d6-3f6b6640e8d4",
+    "description": "продукты",
+    "amount": 595,
+    "createdAt": "2026-03-23T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "6745bead-ddf8-468a-91c2-967f8746b1d4",
+    "description": "бензин",
+    "amount": 2615,
+    "createdAt": "2026-03-23T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "f4e5e5d4-8b89-4de7-abeb-dc224408f01c",
+    "description": "продукты",
+    "amount": 2530,
+    "createdAt": "2026-03-22T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "0c7be44f-d72f-40f1-9e60-6a7515917d04",
+    "description": "взносы",
+    "amount": 300,
+    "createdAt": "2026-03-22T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "1e2bb5aa-2b94-4c68-b0b1-a2aa1e94d2b8",
+    "description": "подарки",
+    "amount": 2315,
+    "createdAt": "2026-03-22T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "5cf560dc-f381-4daf-9777-e2ae03eb3d66",
+    "description": "продукты",
+    "amount": 2395,
+    "createdAt": "2026-03-21T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "1de4188c-6de6-48b8-9e82-b6e7e59d065f",
+    "description": "взносы",
+    "amount": 1580,
+    "createdAt": "2026-03-21T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "6bbb5bc5-0a50-454d-b4ff-9b85f1c0b2f1",
+    "description": "игры",
+    "amount": 6080,
+    "createdAt": "2026-03-21T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "dcfef090-3026-411e-b43e-ebcb013c0c9e",
+    "description": "фасфуд",
+    "amount": 4780,
+    "createdAt": "2026-03-21T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "18c14fbf-a0f6-4d8b-a5ed-b7cc44872f48",
+    "description": "продукты",
+    "amount": 1280,
+    "createdAt": "2026-03-20T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "8072a52a-69c6-413d-8905-0ef142a1dd10",
+    "description": "обслуживание",
+    "amount": 1110,
+    "createdAt": "2026-03-20T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "923c5534-84de-4a80-af83-71e57bae4d09",
+    "description": "игры",
+    "amount": 1540,
+    "createdAt": "2026-03-20T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "d64ee68f-48d9-4cfd-b382-e62806de17e7",
+    "description": "еда вне дома",
+    "amount": 140,
+    "createdAt": "2026-03-20T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "bd37529e-fd03-47a7-a47b-a250150e21c5",
+    "description": "продукты",
+    "amount": 115,
+    "createdAt": "2026-03-19T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "d0f93be4-b8e7-4737-861b-8d62be9c2728",
+    "description": "еда вне дома",
+    "amount": 85,
+    "createdAt": "2026-03-19T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "436949e0-eb9d-45de-99c0-4921db3f1d9c",
+    "description": "продукты",
+    "amount": 305,
+    "createdAt": "2026-03-18T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "8f84fb21-0b9a-47a5-994c-9e75d2452615",
+    "description": "еда вне дома",
+    "amount": 85,
+    "createdAt": "2026-03-18T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "d0b031e2-b58f-4a07-8703-da58cd5bfe30",
+    "description": "продукты",
+    "amount": 225,
+    "createdAt": "2026-03-17T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b429f135-dd00-4e62-b5cb-b5bbcc1aa0f3",
+    "description": "бензин",
+    "amount": 2600,
+    "createdAt": "2026-03-17T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "efcef94a-5e68-4ed5-a322-e672b7df1949",
+    "description": "продукты",
+    "amount": 1445,
+    "createdAt": "2026-03-16T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "1bfc1e6a-fe99-4614-80fb-993ae2e9efdf",
+    "description": "еда вне дома",
+    "amount": 135,
+    "createdAt": "2026-03-16T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "75d3758e-f5b3-4f9e-97c7-0d7957df90c5",
+    "description": "продукты",
+    "amount": 1020,
+    "createdAt": "2026-03-15T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "722ce5af-aed9-4275-8a95-eec811cd630b",
+    "description": "квартира",
+    "amount": 19150,
+    "createdAt": "2026-03-15T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "fdca3a75-e402-4580-8230-39e1edbeff0a",
+    "description": "стрижка",
+    "amount": 500,
+    "createdAt": "2026-03-15T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "91af9c17-b15e-4442-a1a2-83718692ed77",
+    "description": "продукты",
+    "amount": 460,
+    "createdAt": "2026-03-14T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "6dfac540-cc0e-4011-8541-e70e1aa7bb3d",
+    "description": "налог",
+    "amount": 10230,
+    "createdAt": "2026-03-14T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "802b9c91-2266-4d22-9eed-1c1350bef0f6",
+    "description": "еда вне дома",
+    "amount": 825,
+    "createdAt": "2026-03-13T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "6f6348f5-9095-42df-a5c2-b825b935f941",
+    "description": "техника и мебель",
+    "amount": 4190,
+    "createdAt": "2026-03-13T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "ff34779b-2ce8-440a-a91c-688938698c8c",
+    "description": "продукты",
+    "amount": 140,
+    "createdAt": "2026-03-12T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "786f60bf-360e-44b7-a21d-c5892c4a2214",
+    "description": "продукты",
+    "amount": 85,
+    "createdAt": "2026-03-11T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "9a54fbc9-e9f7-4fc0-9c0a-3396c2c46254",
+    "description": "бензин",
+    "amount": 2590,
+    "createdAt": "2026-03-11T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "2c671407-79d0-4f5b-915a-d0580e9889e1",
+    "description": "продукты",
+    "amount": 2110,
+    "createdAt": "2026-03-10T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "101df7af-a658-4d78-9137-5731bdf69e9e",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-03-10T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "e383b9bf-ebe5-4609-ad30-fc9f9f09f774",
+    "description": "продукты",
+    "amount": 1620,
+    "createdAt": "2026-03-09T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b34c9fad-ae1e-4bc5-ad5a-60836bc5affc",
+    "description": "продукты",
+    "amount": 980,
+    "createdAt": "2026-03-08T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "26e3f9f0-dc96-40ac-b567-d23ff39e79c6",
+    "description": "фасфуд",
+    "amount": 2760,
+    "createdAt": "2026-03-08T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "c4a7c6c9-40c8-4fc5-b1c8-9fa59261d32f",
+    "description": "концерт",
+    "amount": 7670,
+    "createdAt": "2026-03-08T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "e8a6f16e-6eab-4e06-8a0d-023e7ddbf23a",
+    "description": "продукты",
+    "amount": 1070,
+    "createdAt": "2026-03-07T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "c821d318-0624-4595-9454-203b817904fd",
+    "description": "авто",
+    "amount": 9150,
+    "createdAt": "2026-03-07T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "e1b46ed9-bae5-4685-8484-71d7dc533c1a",
+    "description": "игры",
+    "amount": 6000,
+    "createdAt": "2026-03-07T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "2d189812-cd28-461c-a992-4e820f15829e",
+    "description": "фасфуд",
+    "amount": 1865,
+    "createdAt": "2026-03-07T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "e33dddbd-40f5-4031-9df0-06d705cf7c33",
+    "description": "продукты",
+    "amount": 1160,
+    "createdAt": "2026-03-06T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "e1a545f9-14a7-474f-88a8-b40a039b9a63",
+    "description": "кварплата",
+    "amount": 10585,
+    "createdAt": "2026-03-06T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "ebe861d2-632e-4bf7-8d22-ec713c48792a",
+    "description": "еда вне дома",
+    "amount": 85,
+    "createdAt": "2026-03-06T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "61824ece-3678-4e3b-9f45-f8ee0b85791b",
+    "description": "подарки",
+    "amount": 1080,
+    "createdAt": "2026-03-06T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "874ab588-3b5f-47c6-a39a-b0399bf9b510",
+    "description": "бензин",
+    "amount": 2890,
+    "createdAt": "2026-03-05T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "5b1c0dff-38ae-4b7a-9966-71747562efcc",
+    "description": "зал",
+    "amount": 2740,
+    "createdAt": "2026-03-05T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "555a1837-56c0-4374-ae6e-95ba49ff8f09",
+    "description": "еда вне дома",
+    "amount": 85,
+    "createdAt": "2026-03-05T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "36ab0809-e8ff-47b0-9843-bd941946f7e7",
+    "description": "подарки",
+    "amount": 3130,
+    "createdAt": "2026-03-05T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "a3f5831b-f711-4c83-a45f-241464568106",
+    "description": "подарки",
+    "amount": 5870,
+    "createdAt": "2026-03-04T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "6c77e259-ee97-4855-82d9-27f2368dc0e6",
+    "description": "секции",
+    "amount": 3300,
+    "createdAt": "2026-03-03T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "76fef97d-8d19-408e-af66-3f04b0f995da",
+    "description": "бассейн",
+    "amount": 3600,
+    "createdAt": "2026-03-03T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "3c41dc97-3b79-4b16-9f7a-85555fea7352",
+    "description": "сотовый",
+    "amount": 200,
+    "createdAt": "2026-03-03T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "a754074b-26ed-4cad-b3fd-87c0188e18c6",
+    "description": "продукты",
+    "amount": 1190,
+    "createdAt": "2026-03-02T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "4823594d-404c-4532-84e6-237c504eb528",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-03-02T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "4ce67574-7095-464b-83a4-62112e539742",
+    "description": "секции",
+    "amount": 5000,
+    "createdAt": "2026-03-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "0ef35a04-63fa-4a83-8ab7-fdec4eb7ed36",
+    "description": "еда вне дома",
+    "amount": 85,
+    "createdAt": "2026-03-02T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "94d3dc8e-5dbb-40b2-bfd5-3c7f33e5a08f",
+    "description": "подарки",
+    "amount": 1545,
+    "createdAt": "2026-03-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "760a0a71-ee93-4afa-ad45-ba5b28bb0fd3",
+    "description": "продукты",
+    "amount": 865,
+    "createdAt": "2026-03-01T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "56c1dce0-f13c-4f21-a76d-effd4f4c4b26",
+    "description": "инет",
+    "amount": 650,
+    "createdAt": "2026-03-01T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "4457102e-cb5f-428a-a2a0-7a4f03627d54",
+    "description": "карманны",
+    "amount": 4500,
+    "createdAt": "2026-03-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "29c38ad2-9e67-4f0f-b8d0-cc29c9285c97",
+    "description": "обучение",
+    "amount": 6000,
+    "createdAt": "2026-03-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "f48f9908-e124-459a-b965-3422f2c8d3cc",
+    "description": "сотовый",
+    "amount": 1100,
+    "createdAt": "2026-03-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "898e0b4e-29ba-46df-8ca1-21e42318ce7e",
+    "description": "продукты",
+    "amount": 3800,
+    "createdAt": "2026-02-28T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "ff8accb6-3179-4fda-9639-257194402fa2",
+    "description": "еда",
+    "amount": 1250,
+    "createdAt": "2026-02-28T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "2af8f519-201e-44c4-8d09-ddeabbffc9db",
+    "description": "продукты",
+    "amount": 1190,
+    "createdAt": "2026-02-27T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "a00d1c0d-860e-4e41-b7fa-d0e6fcef6db4",
+    "description": "еда вне дома",
+    "amount": 105,
+    "createdAt": "2026-02-27T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "5c8df5a1-0c4f-44d0-9476-560cd8c527fa",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-02-26T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "00d586a7-00d3-42af-8f81-5e2674b6ade6",
+    "description": "подарки",
+    "amount": 360,
+    "createdAt": "2026-02-26T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "dec19dce-9a5e-45c5-accd-9ea45950d04c",
+    "description": "продукты",
+    "amount": 545,
+    "createdAt": "2026-02-25T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "fe26a457-5136-4010-9fce-8596b2d0a7d5",
+    "description": "прочее",
+    "amount": 100,
+    "createdAt": "2026-02-25T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "968a51dc-01a3-4b4c-836c-61b1b31b9aca",
+    "description": "еда вне дома",
+    "amount": 200,
+    "createdAt": "2026-02-25T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "01d07f0b-57a8-4253-966f-b8b18c4a6c12",
+    "description": "техника и мебель",
+    "amount": 1490,
+    "createdAt": "2026-02-25T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "5d4f5e15-5b97-4795-ad33-7ced1ac3712a",
+    "description": "продукты",
+    "amount": 1080,
+    "createdAt": "2026-02-24T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "237bb395-f12c-4962-ad3e-ed4029ae4692",
+    "description": "еда вне дома",
+    "amount": 85,
+    "createdAt": "2026-02-24T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "3a8393de-76e1-41bf-8a43-ca157d768289",
+    "description": "продукты",
+    "amount": 855,
+    "createdAt": "2026-02-23T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "683a6374-2dcc-46b8-a030-2ccc874052a5",
+    "description": "ремонт",
+    "amount": 2700,
+    "createdAt": "2026-02-23T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "14cad724-b25d-4094-bddd-d8fe139d2ea7",
+    "description": "рестик",
+    "amount": 4000,
+    "createdAt": "2026-02-23T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "e0fc1387-533d-468c-bb12-bca1e392473e",
+    "description": "продукты",
+    "amount": 2360,
+    "createdAt": "2026-02-22T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "f51e1d48-b83b-434a-a850-78dcb6118efe",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-02-22T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "d19c134f-7728-47a4-bcfa-50c697e6159d",
+    "description": "техника и мебель",
+    "amount": 7390,
+    "createdAt": "2026-02-22T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "eba2382e-cd7f-4502-9ed2-abe4515b3578",
+    "description": "продукты",
+    "amount": 765,
+    "createdAt": "2026-02-21T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "ca87aa7a-f9cc-4068-a085-1825742a250e",
+    "description": "подписки",
+    "amount": 13900,
+    "createdAt": "2026-02-21T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "68f65e8f-6343-4a6d-aa3f-c0766ab2cfed",
+    "description": "продукты",
+    "amount": 1875,
+    "createdAt": "2026-02-20T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "57c04b49-ade0-4477-b116-1fa302ff9b0b",
+    "description": "продукты",
+    "amount": 1210,
+    "createdAt": "2026-02-19T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "c9355f3e-ba89-4894-9683-4c1a4898e1a1",
+    "description": "кварплата",
+    "amount": 9900,
+    "createdAt": "2026-02-19T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "b2265ab4-55ba-4aaf-8c8e-76e644accb48",
+    "description": "продукты",
+    "amount": 1690,
+    "createdAt": "2026-02-18T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "3903cfff-5950-4b9b-a7ca-d815c9f36e34",
+    "description": "бензин",
+    "amount": 1500,
+    "createdAt": "2026-02-18T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "008abb2e-4508-4009-8863-e1f5531a4f2b",
+    "description": "подарки",
+    "amount": 500,
+    "createdAt": "2026-02-18T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "dab86f05-dd68-45bb-89bc-cf5c214673c8",
+    "description": "штраф",
+    "amount": 5625,
+    "createdAt": "2026-02-17T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "c8b1365f-6a24-42a1-af68-29f90a182139",
+    "description": "продукты",
+    "amount": 2040,
+    "createdAt": "2026-02-15T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b5f824bc-9720-45ca-a62b-fbec7d85428d",
+    "description": "квартира",
+    "amount": 19150,
+    "createdAt": "2026-02-15T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "c8c3fa39-e352-47d9-916f-e0a229517e57",
+    "description": "продукты",
+    "amount": 70,
+    "createdAt": "2026-02-14T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b4fdafe9-ae2b-4ef3-b318-fec83a555170",
+    "description": "подарки",
+    "amount": 5630,
+    "createdAt": "2026-02-13T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "b0360d42-d375-43fb-9125-cfb3dcabd174",
+    "description": "продукты",
+    "amount": 1400,
+    "createdAt": "2026-02-12T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "c45b7d71-70e8-4f61-9654-a61fd879863c",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-02-12T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "9c5c6226-10ed-4f99-9418-4956383a91e5",
+    "description": "подарки",
+    "amount": 4070,
+    "createdAt": "2026-02-12T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "eea3c49f-5d71-4cc4-8522-4004e24af7cd",
+    "description": "продукты",
+    "amount": 820,
+    "createdAt": "2026-02-11T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "ac23a60c-42b5-46e0-99f6-89f62c1be806",
+    "description": "подарки",
+    "amount": 475,
+    "createdAt": "2026-02-11T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "abf9f212-1d30-4d2d-a64e-0f20252389f5",
+    "description": "продукты",
+    "amount": 1840,
+    "createdAt": "2026-02-10T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "183a6b96-b19b-4d7f-a287-60e88e6028d6",
+    "description": "еда вне дома",
+    "amount": 200,
+    "createdAt": "2026-02-10T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "bede8b56-a170-478c-8700-772a9e25bcbe",
+    "description": "продукты",
+    "amount": 790,
+    "createdAt": "2026-02-09T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "1f6161fe-4460-4ba9-9cc9-e4b802b28e81",
+    "description": "бензин",
+    "amount": 1000,
+    "createdAt": "2026-02-09T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "87eae14a-2bab-4d73-983c-b08ae300b10d",
+    "description": "продукты",
+    "amount": 1615,
+    "createdAt": "2026-02-08T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "3a495001-0432-411b-89b2-444a3c0d9d3c",
+    "description": "ветеренар",
+    "amount": 300,
+    "createdAt": "2026-02-08T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "5ea0da76-07f0-4920-98dc-094502c0f243",
+    "description": "авто",
+    "amount": 9160,
+    "createdAt": "2026-02-07T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "3c89f58a-4132-42fc-9a8c-506691cac982",
+    "description": "расходники",
+    "amount": 1760,
+    "createdAt": "2026-02-07T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "7edd7675-a51b-4082-9a5c-6e5189ee688a",
+    "description": "продукты",
+    "amount": 125,
+    "createdAt": "2026-02-06T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "dbe9b269-34d9-4344-8660-2de4ac473319",
+    "description": "продукты",
+    "amount": 1320,
+    "createdAt": "2026-02-05T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "fccf65b0-e84a-4480-8d63-850ffca33eb3",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-02-05T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "4468a21c-0001-4301-b0b0-116c0deb2e89",
+    "description": "еда вне дома",
+    "amount": 400,
+    "createdAt": "2026-02-04T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "c3090e17-a914-4149-be5b-ff86334dd4b6",
+    "description": "техника и мебель",
+    "amount": 620,
+    "createdAt": "2026-02-04T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "1937306f-8f05-4688-95ff-567ec8c4c941",
+    "description": "продукты",
+    "amount": 890,
+    "createdAt": "2026-02-03T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "41f74cd0-de42-4ba2-8074-855ec441eac5",
+    "description": "карманны",
+    "amount": 4500,
+    "createdAt": "2026-02-03T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "b8b69b92-da64-40b9-8c14-300f57385bbc",
+    "description": "секции",
+    "amount": 5000,
+    "createdAt": "2026-02-03T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "db2e2c1c-9ca0-4d7c-8f6c-13945f589d84",
+    "description": "спорт",
+    "amount": 4300,
+    "createdAt": "2026-02-03T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "393f4234-37d6-4a97-8dbe-e90da908c76d",
+    "description": "еда вне дома",
+    "amount": 330,
+    "createdAt": "2026-02-03T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "f428ecdc-25f3-4482-b113-114951507046",
+    "description": "подарки",
+    "amount": 980,
+    "createdAt": "2026-02-03T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "3f81cea7-ae75-4309-9a34-ac598796a113",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-02-02T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "ee85cde7-e43c-4713-8bd3-5e6a38b09698",
+    "description": "секции",
+    "amount": 3300,
+    "createdAt": "2026-02-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "92390ca4-314d-41fc-9a7d-3a8f9f7e53f3",
+    "description": "продукты",
+    "amount": 3880,
+    "createdAt": "2026-02-01T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "90829f4e-5af3-414b-b677-8b0c018e026b",
+    "description": "инет",
+    "amount": 650,
+    "createdAt": "2026-02-01T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "56ef24ce-7264-4ef8-85e5-d3ea5bd9d757",
+    "description": "секции",
+    "amount": 6000,
+    "createdAt": "2026-02-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "55b1e0d7-bad3-4020-b1cd-9715b3425c50",
+    "description": "сотовый",
+    "amount": 1100,
+    "createdAt": "2026-02-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "9d358e9d-4d8c-4d99-86f4-800e51a54b9f",
+    "description": "стрижка",
+    "amount": 450,
+    "createdAt": "2026-02-01T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "09b0ab6c-9b31-46f8-b37d-e6ab8a7db169",
+    "description": "продукты",
+    "amount": 825,
+    "createdAt": "2026-01-31T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "966bae2d-dfbd-482d-aa7b-1f5ac3d7c7ce",
+    "description": "продукты",
+    "amount": 1100,
+    "createdAt": "2026-01-30T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "d0b46ce4-d8da-48a3-86c4-8241a30d10c2",
+    "description": "подписки",
+    "amount": 9900,
+    "createdAt": "2026-01-30T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "d77fd012-d37f-4676-9582-15329d0d38d6",
+    "description": "продукты",
+    "amount": 1530,
+    "createdAt": "2026-01-29T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "7a53a5ce-ed55-42b3-b359-2d0c80c9f99e",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-01-29T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "c0073880-947a-4850-8815-044c3ae1495d",
+    "description": "еда вне дома",
+    "amount": 85,
+    "createdAt": "2026-01-29T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "1c4a6017-64e4-4abe-bb64-114ba1520b09",
+    "description": "подарки",
+    "amount": 500,
+    "createdAt": "2026-01-29T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "d921d495-dc60-4a5b-9e94-372fc7b2f45a",
+    "description": "продукты",
+    "amount": 280,
+    "createdAt": "2026-01-28T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "f2a027f4-cb37-4053-8bf6-9f6dc751bb93",
+    "description": "продукты",
+    "amount": 1670,
+    "createdAt": "2026-01-27T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b37687f5-40a0-4d56-a461-85360af51c1b",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-01-27T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "4b4ee676-fdc2-452c-ac3c-8ef0b50022c1",
+    "description": "еда вне дома",
+    "amount": 660,
+    "createdAt": "2026-01-26T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "e1909c1f-3c3f-4329-989c-250b53f2db84",
+    "description": "продукты",
+    "amount": 2015,
+    "createdAt": "2026-01-25T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "58db4d8c-b53c-4211-8732-fb232b27abb3",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-01-25T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "f4bd8f92-f6b3-4729-8cce-1abeb54c03bf",
+    "description": "обслуживание",
+    "amount": 1700,
+    "createdAt": "2026-01-25T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "a5c76989-001d-4d48-8fa8-dc68507f7a72",
+    "description": "расходники",
+    "amount": 195,
+    "createdAt": "2026-01-25T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "ef9294c9-c24a-4cc9-a538-a8ab043067dd",
+    "description": "взносы",
+    "amount": 2300,
+    "createdAt": "2026-01-25T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "0e7895d7-dcdd-4861-b215-139825c41209",
+    "description": "продукты",
+    "amount": 1985,
+    "createdAt": "2026-01-24T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "a4abca48-a1ef-420d-8ed8-dfebbd1e63bf",
+    "description": "квартира",
+    "amount": 2700,
+    "createdAt": "2026-01-24T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "7bb7b6a6-88c2-449f-ac51-64fe91178c24",
+    "description": "продукты",
+    "amount": 895,
+    "createdAt": "2026-01-23T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "d463477d-b891-4174-9d14-fb6063a61970",
+    "description": "еда",
+    "amount": 1250,
+    "createdAt": "2026-01-23T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "ecba6ba9-746e-492a-8b5e-ec5ef49ef36a",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-01-23T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "13dfd0d2-34ea-4853-85ce-904e49a5806f",
+    "description": "продукты",
+    "amount": 70,
+    "createdAt": "2026-01-22T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "ca6ddb67-eb05-4985-a902-78eeb8d77795",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-01-22T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "3eb167df-c2d3-4c7f-b858-5aa3e772dcfe",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-01-22T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "7d69c685-d662-45b2-8816-62f35bb71b59",
+    "description": "продукты",
+    "amount": 1735,
+    "createdAt": "2026-01-20T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "fc59bb1c-240f-450e-9b14-ea6aa176fe8f",
+    "description": "продукты",
+    "amount": 475,
+    "createdAt": "2026-01-19T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "df0f1d24-85cd-41ff-b895-cd5e541512b8",
+    "description": "продукты",
+    "amount": 1640,
+    "createdAt": "2026-01-18T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "37fc9f2c-f0f1-497e-84e0-56023a43e038",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-01-18T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "90fb01a8-3e99-4c0c-9f28-4ea31f419265",
+    "description": "продукты",
+    "amount": 1025,
+    "createdAt": "2026-01-16T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "494346f3-0af9-438f-80a4-d23c8a201529",
+    "description": "кино",
+    "amount": 3000,
+    "createdAt": "2026-01-16T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "f5644a7a-6e0e-4df8-9bf1-a57ba2c09cc4",
+    "description": "подписки",
+    "amount": 200,
+    "createdAt": "2026-01-16T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "54085646-53fe-42f1-95a9-ad7f9cded22a",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-01-16T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "3094a3dc-8791-4712-aa97-9ba5fca7ef05",
+    "description": "продукты",
+    "amount": 1260,
+    "createdAt": "2026-01-15T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "dfbca84c-449c-431b-b7c8-70356da7461a",
+    "description": "квартира",
+    "amount": 19135,
+    "createdAt": "2026-01-15T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "e2393828-3d6f-4a0b-b4a7-e6ad9aa803b5",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-01-15T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "5913d5ff-cfb9-4127-978b-cc46eca82491",
+    "description": "продукты",
+    "amount": 850,
+    "createdAt": "2026-01-14T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "8650cfd0-2b4d-477d-bf87-28449e12d3d8",
+    "description": "бензин",
+    "amount": 1610,
+    "createdAt": "2026-01-14T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "76618874-8416-4f51-aa0a-6c2573fa7b4b",
+    "description": "еда вне дома",
+    "amount": 100,
+    "createdAt": "2026-01-14T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "8257376f-4b33-4581-98b9-3f4499a87e14",
+    "description": "продукты",
+    "amount": 965,
+    "createdAt": "2026-01-13T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "925e6ede-a604-4fde-8d0e-f3894bcc9594",
+    "description": "продукты",
+    "amount": 1660,
+    "createdAt": "2026-01-12T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "85ea9f63-acab-413d-92fb-9cb966a8a8e8",
+    "description": "секции",
+    "amount": 4500,
+    "createdAt": "2026-01-12T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "2a753bc6-5b10-419d-8359-1dad271a40be",
+    "description": "продукты",
+    "amount": 1015,
+    "createdAt": "2026-01-11T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "3c413a74-d556-418c-b5bb-f9e704b360ff",
+    "description": "продукты",
+    "amount": 1350,
+    "createdAt": "2026-01-10T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "d9e91f7f-e8f0-4d70-93f1-5def4e1bdb24",
+    "description": "бензин",
+    "amount": 1550,
+    "createdAt": "2026-01-10T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "682cf5a8-94ee-4257-b334-edc42ba02669",
+    "description": "продукты",
+    "amount": 530,
+    "createdAt": "2026-01-09T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "5dd57c4a-09a1-42c2-bb58-39a80a7d5435",
+    "description": "продукты",
+    "amount": 1095,
+    "createdAt": "2026-01-08T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "e57cdb6d-78b4-414e-a939-7eda7421e873",
+    "description": "фасфуд",
+    "amount": 1400,
+    "createdAt": "2026-01-08T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "5735850c-1186-408c-ac12-554991968688",
+    "description": "другое",
+    "amount": 3500,
+    "createdAt": "2026-01-08T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "ee7ed3b0-2916-47ad-9bbc-a77d41ae30ef",
+    "description": "техника и мебель",
+    "amount": 400,
+    "createdAt": "2026-01-08T12:00:00Z",
+    "categoryId": "shopping"
+  },
+  {
+    "id": "d77a7809-e27c-4901-b257-2cf55ea17df9",
+    "description": "продукты",
+    "amount": 535,
+    "createdAt": "2026-01-07T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "755111ac-8867-4ed2-a0ea-57af48228ddf",
+    "description": "авто",
+    "amount": 9160,
+    "createdAt": "2026-01-07T12:00:00Z",
+    "categoryId": "debts"
+  },
+  {
+    "id": "ed22acb4-b677-4724-bd0c-9d67bcbccd01",
+    "description": "обучение",
+    "amount": 480,
+    "createdAt": "2026-01-07T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "3effce4d-ddbd-4c32-9868-65c12c3d7c69",
+    "description": "другое",
+    "amount": 750,
+    "createdAt": "2026-01-07T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "8a5a6964-0814-45d8-b3f1-26987e288872",
+    "description": "еда вне дома",
+    "amount": 1945,
+    "createdAt": "2026-01-07T12:00:00Z",
+    "categoryId": "eating_out"
+  },
+  {
+    "id": "34fa33a1-58e0-4912-a1ff-fa66d4e0ffec",
+    "description": "продукты",
+    "amount": 620,
+    "createdAt": "2026-01-06T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "657bc98d-9a8c-43c0-b1b9-80e62b60a6ce",
+    "description": "кварплата",
+    "amount": 8635,
+    "createdAt": "2026-01-06T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "62062838-a308-4775-a938-896dbd85cc44",
+    "description": "другое",
+    "amount": 680,
+    "createdAt": "2026-01-06T12:00:00Z",
+    "categoryId": "entertainment"
+  },
+  {
+    "id": "353802e8-4066-417a-88a2-372caffbcb7e",
+    "description": "продукты",
+    "amount": 1210,
+    "createdAt": "2026-01-05T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "9d342a50-c255-469f-bf3c-867e6725fb9f",
+    "description": "бензин",
+    "amount": 1550,
+    "createdAt": "2026-01-05T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "14002410-2ea8-42d1-86a0-f4e4b59e61a3",
+    "description": "продукты",
+    "amount": 180,
+    "createdAt": "2026-01-04T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "b306a58d-7cba-482b-b41e-039c0e5b2c09",
+    "description": "зал",
+    "amount": 12600,
+    "createdAt": "2026-01-04T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "42235f7b-167e-4707-ac86-06a6f3b314b5",
+    "description": "продукты",
+    "amount": 1260,
+    "createdAt": "2026-01-03T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "13b41414-b462-44db-b11a-9361ddfc2002",
+    "description": "секции",
+    "amount": 6000,
+    "createdAt": "2026-01-02T12:00:00Z",
+    "categoryId": "other"
+  },
+  {
+    "id": "46d00442-b4f8-46ae-a4a1-a0a8c5937daf",
+    "description": "продукты",
+    "amount": 375,
+    "createdAt": "2026-01-01T12:00:00Z",
+    "categoryId": "groceries"
+  },
+  {
+    "id": "608d9e68-5279-4537-8c67-5adf80e72a8e",
+    "description": "инет",
+    "amount": 650,
+    "createdAt": "2026-01-01T12:00:00Z",
+    "categoryId": "housing"
+  },
+  {
+    "id": "fd8faf2c-47c8-45ee-b07a-8aa97e7fb9e4",
+    "description": "бензин",
+    "amount": 1550,
+    "createdAt": "2026-01-01T12:00:00Z",
+    "categoryId": "transport"
+  },
+  {
+    "id": "c5034a7e-9e63-4ff5-9bcc-bedc8e45453f",
+    "description": "аптека",
+    "amount": 965,
+    "createdAt": "2026-01-01T12:00:00Z",
+    "categoryId": "health"
+  },
+  {
+    "id": "b89afcf7-572c-4186-ac50-2db1c8302ba7",
+    "description": "сотовый",
+    "amount": 400,
+    "createdAt": "2026-01-01T12:00:00Z",
+    "categoryId": "other"
+  }
+]
