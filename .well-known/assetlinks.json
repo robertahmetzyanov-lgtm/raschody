@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ru.raschody.app",
+      "sha256_cert_fingerprints": [
+        "6F:F8:4D:FE:A9:31:A5:50:E0:09:03:1F:EA:4D:A4:D1:DC:94:FF:C9:08:A1:4F:1B:CE:90:65:31:94:92:0D:90"
+      ]
+    }
+  }
+]
